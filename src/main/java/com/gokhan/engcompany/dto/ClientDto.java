@@ -1,0 +1,10 @@
+package com.gokhan.engcompany.dto;
+
+import com.gokhan.engcompany.entity.Person;
+
+public class ClientDto {
+
+    public int clientId;
+    public PersonDto personDto;
+
+}

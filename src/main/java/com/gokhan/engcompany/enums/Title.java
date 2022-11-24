@@ -1,0 +1,6 @@
+package com.gokhan.engcompany.enums;
+
+public enum Title {
+        GROUP_MANAGER,PC_MANAGER,RTU_MANAGER,SCADA_MANAGER,
+        JUNIOR_ENGINEER,SENIOR_ENGINEER,LEAD_ENGINEER,DRAFT_MAN,INTERN
+}
