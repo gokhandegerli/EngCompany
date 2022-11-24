@@ -123,7 +123,7 @@ public class Department {
         }
         //dto.employeeDtoList = this.getEmployeeList();
         for (Project project:this.projectList) {
-            dto.projectDtoList.add(project.toDto());git
+            dto.projectDtoList.add(project.toDto());
         }
 
         //dto.projectDtoList = projectService.getProjectDtoList(this.getProjectList());
