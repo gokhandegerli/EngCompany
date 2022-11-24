@@ -5,6 +5,7 @@ import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.dto.ManagerDto;
 import com.gokhan.engcompany.enums.DepartmentType;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,16 @@ import java.util.List;
 @Entity
 public class Department {
 
-    private final static String MAP_CAT="department";
+    private final static String MAP_CAT = "department";
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int departmentId;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Manager manager;
 
-    @OneToMany (mappedBy = MAP_CAT,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
 
     @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
@@ -30,7 +31,7 @@ public class Department {
     @ManyToOne
     private HeadDepartment headDepartment;
 
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private DepartmentType departmentType;
 
     public Department() {
@@ -60,7 +61,7 @@ public class Department {
                 : manager; //If else'in kısa hali
     }
 
-    public ManagerDto getManagerDto () {
+    public ManagerDto getManagerDto() {
         return manager == null
                 ? null
                 : manager.toDto(); //If else'in kısa hali
@@ -110,23 +111,13 @@ public class Department {
         this.headDepartment = headDepartment;
     }
 
-    public DepartmentDto getDepartmentDto (){
+    public DepartmentDto getDepartmentDto() {
         DepartmentDto dto = new DepartmentDto();
         dto.departmentIdDto = this.getDepartmentId();
         dto.departmentTypeDto = this.getDepartmentType();
-       /* if (this.getManager() != null) {
-            dto.managerDto = this.getManager().toDto();
-        }*/
-        dto.managerDto= this.getManagerDto();
-        for (Employee employee:this.employeeList) {
-            dto.employeeDtoList.add(employee.toDto());
-        }
-        //dto.employeeDtoList = this.getEmployeeList();
-        for (Project project:this.projectList) {
-            dto.projectDtoList.add(project.toDto());
-        }
-
-        //dto.projectDtoList = projectService.getProjectDtoList(this.getProjectList());
+        dto.managerDto = this.getManagerDto();
+        dto.employeeDtoList = this.employeeList.stream().map(Employee::toDto).toList();
+        dto.projectDtoList = this.projectList.stream().map(Project::toDto).toList();
         return dto;
     }
 }
