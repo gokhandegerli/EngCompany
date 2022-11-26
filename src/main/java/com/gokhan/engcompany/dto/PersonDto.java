@@ -10,4 +10,6 @@ public class PersonDto {
     public String addressDto;
     public String companyNameDto;
 
+    public String message;
+
 }
