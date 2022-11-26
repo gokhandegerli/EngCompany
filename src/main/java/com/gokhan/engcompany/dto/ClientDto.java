@@ -6,5 +6,6 @@ public class ClientDto {
 
     public int clientId;
     public PersonDto personDto;
+    public String message;
 
 }
