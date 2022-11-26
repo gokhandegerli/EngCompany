@@ -1,6 +1,8 @@
 package com.gokhan.engcompany.entity;
 
 
+import com.gokhan.engcompany.dto.HeadDepartmentDto;
+import com.gokhan.engcompany.dto.ManagerDto;
 import com.gokhan.engcompany.enums.DepartmentType;
 
 import javax.persistence.*;
@@ -50,6 +52,12 @@ public class HeadDepartment {
                 : manager;
     }
 
+    public ManagerDto getManagerDto() {
+        return manager == null
+                ? null
+                : manager.toDto(); //If else'in kısa hali
+    }
+
     public void setManager(Manager manager) {
         this.manager = manager;
     }
@@ -70,6 +78,15 @@ public class HeadDepartment {
         this.departmentType = departmentTypeName;
     }
 
+    public HeadDepartmentDto toDto() {
+        HeadDepartmentDto dto = new HeadDepartmentDto();
+        dto.headDepartmentIdDto = this.getHeadDepartmentId();
+        dto.departmentType = this.getDepartmentType();
+        dto.managerDto = this.getManagerDto();
+        dto.departmentDtoList = this.getDepartmentList().stream().map(Department::toDto).toList();
+        //dto.departmentDtoList = departmentService.getDepartmentDtoList(headDepartment.getDepartmentList());
+        return dto;
+    }
 
 }
 

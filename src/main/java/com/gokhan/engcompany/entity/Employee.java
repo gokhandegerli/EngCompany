@@ -75,8 +75,6 @@ public class Employee {
         return dto;
     }
 
-    public List<EmployeeDto> getEmployeeDtoList(List<Employee> employeeList) {
 
-    }
 
 }

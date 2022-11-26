@@ -18,14 +18,7 @@ public class EmployeeService {
     @Autowired
     PersonService personService;
 
-    public List<EmployeeDto> getEmployeeDtoList(List<Employee> employeeList) {
-        List<EmployeeDto> employeeDtoList = new ArrayList<>();
 
-        for (Employee employee:employeeList) {
-            employeeDtoList.add(toDto(employee));
-        }
-        return employeeDtoList;
-    }
 
     private EmployeeDto toDto(Employee employee) {
 

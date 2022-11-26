@@ -28,41 +28,42 @@ public class HeadDepartmentService {
         HeadDepartment headDepartment = new HeadDepartment();
         headDepartment.setDepartmentType(departmentType);
         repository.save(headDepartment);
-        return toDto(headDepartment);
+        return headDepartment.toDto();
     }
 
-    private HeadDepartmentDto toDto(HeadDepartment headDepartment) {
-        HeadDepartmentDto dto = new HeadDepartmentDto();
-        dto.headDepartmentIdDto = headDepartment.getHeadDepartmentId();
-        dto.departmentType = headDepartment.getDepartmentType();
-        if (headDepartment.getManager() != null) {
-            dto.managerDto = headDepartment.getManager().toDto();
-        }
-        dto.departmentDtoList = departmentService.getDepartmentDtoList(headDepartment.getDepartmentList());
-        return dto;
-    }
+
 
 
     public HeadDepartmentDto addManager(int managerId, int headDepartmentId) {
 
         HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
         headDepartment.setManager(managerService.getManagerEntity(managerId));
-        return toDto(repository.save(headDepartment));
+        return repository.save(headDepartment).toDto();
     }
 
     public HeadDepartmentDto addDepartment(int departmentId, int headDepartmentId) {
 
-        HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-        //if contains, stream: HeadDepartment sahip olduğu bütün departmanların id'leri toplanır, departmendId ile
-        // contains sorgusu üzerinden karşılaştırılır, sonuca göre aşağıya devam edilir.
-        Department department =departmentService.getDepartmentEntity(departmentId);
-        departmentService.checkIfDepartmentAPartOfADepartmentList(department,headDepartment.getDepartmentList());
-        //üstteki satır atıl
-        department.setHeadDepartment(headDepartment);
-        headDepartment.getDepartmentList().add(department);
-        return toDto(repository.save(headDepartment));
+        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
+            HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
+            return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment,departmentId))
+                    .toDto());
+        } else {
+            throw new EntityExistsException();
+        }
 
     }
+
+    public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment, int departmentId) {
+        if (headDepartment.getDepartmentList().stream().map(Department::getDepartmentId).equals(departmentId)) {
+            throw new EntityExistsException();
+        } else {
+            Department department = departmentService.getDepartmentEntity(departmentId);
+            department.setHeadDepartment(headDepartment);
+            headDepartment.getDepartmentList().add(department);
+            return  headDepartment;
+        }
+    }
+
 
     private void checkIfHeadDepartmentExists(DepartmentType departmentType) {
         if (repository.existsByDepartmentType(departmentType)) {
@@ -70,10 +71,10 @@ public class HeadDepartmentService {
         }
     }
 
-    public HeadDepartmentDto getHeadDepartmentDto(int headDepartmentId) {
+    public HeadDepartmentDto getHeadDepartment(int headDepartmentId) {
 
         HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-        return toDto(headDepartment);
+        return headDepartment.toDto();
     }
 
     public String deleteHeadDepartment(int headDepartmentId) {

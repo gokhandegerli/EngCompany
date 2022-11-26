@@ -2,7 +2,6 @@ package com.gokhan.engcompany.entity;
 
 
 import com.gokhan.engcompany.dto.DepartmentDto;
-import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.dto.ManagerDto;
 import com.gokhan.engcompany.enums.DepartmentType;
 
@@ -111,13 +110,15 @@ public class Department {
         this.headDepartment = headDepartment;
     }
 
-    public DepartmentDto getDepartmentDto() {
+    public DepartmentDto toDto() {
         DepartmentDto dto = new DepartmentDto();
         dto.departmentIdDto = this.getDepartmentId();
         dto.departmentTypeDto = this.getDepartmentType();
         dto.managerDto = this.getManagerDto();
         dto.employeeDtoList = this.employeeList.stream().map(Employee::toDto).toList();
-        dto.projectDtoList = this.projectList.stream().map(Project::toDto).toList();
+        dto.projectDtoList = this.projectList.stream().map(Project::toDto).toList(); // Project list'i stream'e sokuyor,
+        //map'liyor ve listedeki her elemanı (her bir proje nesnesini) Project entity içindeki toDto metodundan geçirip,
+        //tekrar liste olarak geri dönüyor.
         return dto;
     }
 }

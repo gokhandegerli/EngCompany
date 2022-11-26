@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,19 +26,15 @@ public class DepartmentService {
     @Autowired
     EmployeeService employeeService;
 
-    public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList) {
-
+    /*public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList) {
         List<DepartmentDto> departmentDtoList = new ArrayList<>();
-
         for(Department department:departmentList) {
             departmentDtoList.add(toDto(department));
         }
-
         return departmentDtoList;
+    }*/
 
-    }
-
-    private DepartmentDto toDto(Department department) {
+/*    private DepartmentDto toDto(Department department) {
 
         DepartmentDto dto = new DepartmentDto();
         dto.departmentIdDto = department.getDepartmentId();
@@ -50,7 +45,7 @@ public class DepartmentService {
         dto.employeeDtoList = employeeService.getEmployeeDtoList(department.getEmployeeList());
         dto.projectDtoList = projectService.getProjectDtoList(department.getProjectList());
         return dto;
-    }
+    }*/
 
     public Department getDepartmentEntity(int departmentId) {
         return repository.findById(departmentId).get();
@@ -61,24 +56,27 @@ public class DepartmentService {
         Department department = new Department();
         department.setDepartmentType(departmentType);
         repository.save(department);
-        return toDto(department);
+        return department.toDto();
     }
 
     private void checkIfDepartmentExists(DepartmentType departmentType) {
-        if (repository.existsByDepartmentType(departmentType)){
+        if (repository.existsByDepartmentType(departmentType)) {
             throw new EntityExistsException();
         }
 
     }
 
     public void checkIfDepartmentAPartOfADepartmentList(Department department, List<Department> departmentList) {
-        for(Department department1: departmentList){
+        for (Department department1 : departmentList) {
             if (department1 == department) {
                 throw new EntityExistsException();
             }
         }
     }
 
+    public String deleteDepartment(int departmentId) {
+        repository.deleteById(departmentId);
+        return "Bölüm silindi";
 
-
+    }
 }

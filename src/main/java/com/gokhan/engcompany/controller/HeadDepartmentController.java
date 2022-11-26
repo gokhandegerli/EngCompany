@@ -46,7 +46,7 @@ public class HeadDepartmentController {
 
     @GetMapping("{headDepartmentId}")
     public HeadDepartmentDto getHeadDepartment(@PathVariable(name="headDepartmentId") int headDepartmentId) {
-        return service.getHeadDepartmentDto(headDepartmentId);
+        return service.getHeadDepartment(headDepartmentId);
     }
 
     @DeleteMapping("{headDepartmentId}")

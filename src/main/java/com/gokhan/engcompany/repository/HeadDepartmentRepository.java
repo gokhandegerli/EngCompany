@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface HeadDepartmentRepository extends JpaRepository<HeadDepartment,Integer> {
 
     Boolean existsByDepartmentType (DepartmentType departmentType);
+
+    Boolean existsByHeadDepartmentId (int headDepartmentId);
 }

@@ -1,5 +1,7 @@
 package com.gokhan.engcompany.entity;
 
+import com.gokhan.engcompany.dto.ClientDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -36,4 +38,13 @@ public class Client {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public ClientDto toDto() {
+
+        ClientDto dto = new ClientDto();
+        dto.clientId = this.clientId;
+        dto.personDto = this.person.toDto();
+        return dto;
+    }
+
 }

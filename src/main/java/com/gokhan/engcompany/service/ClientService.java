@@ -15,14 +15,8 @@ public class ClientService {
     PersonService personService;
 
     public ClientDto getClientDto(Client client) {
-        return toDto(client);
+        return client.toDto();
     }
 
-    private ClientDto toDto(Client client) {
 
-        ClientDto dto = new ClientDto();
-        dto.clientId = client.getClientId();
-        dto.personDto = personService.getPersonDto(client.getPerson());
-        return dto;
-    }
 }
