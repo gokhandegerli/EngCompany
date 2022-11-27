@@ -32,9 +32,7 @@ public class HeadDepartmentService {
     }
 
 
-
-
-    public HeadDepartmentDto addManager(int managerId, int headDepartmentId) {
+    public HeadDepartmentDto updateManager(int managerId, int headDepartmentId) {
 
         HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
         headDepartment.setManager(managerService.getManagerEntity(managerId));
@@ -73,7 +71,7 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto getHeadDepartment(int headDepartmentId) {
 
-        HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
+        HeadDepartment headDepartment = repository.findById(headDepartmentId).orElse(null);
         return headDepartment.toDto();
     }
 

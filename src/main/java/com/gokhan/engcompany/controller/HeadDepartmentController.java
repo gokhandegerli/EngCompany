@@ -27,10 +27,10 @@ public class HeadDepartmentController {
         }
     }
 
-    @PutMapping("add-manager/{managerId}/{headDepartmentId}")
-    public HeadDepartmentDto addManager (@PathVariable (value="managerId") int managerId,
-                                                      @PathVariable (value="headDepartmentId") int headDepartmentId) {
-        return service.addManager(managerId, headDepartmentId);
+    @PutMapping("update-manager/{managerId}/{headDepartmentId}")
+    public HeadDepartmentDto updateManager(@PathVariable (value="managerId") int managerId,
+                                           @PathVariable (value="headDepartmentId") int headDepartmentId) {
+        return service.updateManager(managerId, headDepartmentId);
     }
 
     @PostMapping("add-department/{departmentId}/{headDepartmentId}")

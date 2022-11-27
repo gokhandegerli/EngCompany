@@ -24,4 +24,9 @@ public class DepartmentController {
         return service.deleteDepartment(DepartmentId);
     }
 
+    @GetMapping("{departmentId}")
+    public DepartmentDto getDepartment(@PathVariable (value="departmentId") int departmentId) {
+        return service.getDepartment(departmentId);
+    }
+
 }

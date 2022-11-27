@@ -79,4 +79,10 @@ public class DepartmentService {
         return "Bölüm silindi";
 
     }
+
+    public DepartmentDto getDepartment(int departmentId) {
+        return repository.findById(departmentId).get().toDto();
+    }
+
+
 }
