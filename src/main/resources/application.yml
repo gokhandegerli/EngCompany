@@ -2,8 +2,10 @@
 
 server:
   port: 9090
-
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy=ant_path_matcher
   application:
     name: company
   datasource:
@@ -18,6 +20,9 @@ spring:
       ddl-auto: update
     properties:
       hibernate.dialet: org.hibernate.dialect.MySQL5Dialect
+
+
+
 
 
 

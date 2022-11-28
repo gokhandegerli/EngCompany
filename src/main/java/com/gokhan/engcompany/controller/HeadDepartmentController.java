@@ -12,12 +12,14 @@ import javax.persistence.EntityExistsException;
 
 @RestController
 @RequestMapping("head-departments")
+//@Api(value="Head Department api documentation")
 public class HeadDepartmentController {
 
     @Autowired
     HeadDepartmentService service;
 
     @PostMapping("create-head-department-with-name")
+    //@ApiOperation(value="New head department create")
     public HeadDepartmentDto createHeadDepartment(@RequestBody DepartmentType departmentType) {
 
         try {
