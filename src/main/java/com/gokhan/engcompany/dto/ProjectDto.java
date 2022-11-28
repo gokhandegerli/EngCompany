@@ -8,6 +8,6 @@ public class ProjectDto {
     public EmployeeDto employeeDto;
     public ManagerDto managerDto;
 
-    public String message;
+    public String text;
 
 }
