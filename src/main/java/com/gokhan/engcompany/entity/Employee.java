@@ -22,13 +22,20 @@ public class Employee {
 
     @ManyToOne
     private Department department;
+    private boolean isManager;
+    private Integer managerOf;
+    private Integer employeeOfProject;
 
 
-    public Employee(int employeeId, Title title, Person person, Department department) {
+    public Employee(int employeeId, Title title, Person person, Department department, boolean isManager,
+                    Integer managerOf, Integer employeeOfProject) {
         this.employeeId = employeeId;
         this.title = title;
         this.person = person;
         this.department = department;
+        this.isManager = isManager;
+        this.managerOf = managerOf;
+        this.employeeOfProject = employeeOfProject;
     }
 
     public Employee() {
@@ -66,12 +73,40 @@ public class Employee {
         this.department = department;
     }
 
+    public Integer getManagerOf() {
+        return managerOf;
+    }
+
+    public void setManagerOf(Integer managerOf) {
+        this.managerOf = managerOf;
+    }
+
+    public Integer getEmployeeOfProject() {
+        return employeeOfProject;
+    }
+
+    public void setEmployeeOfProject(Integer employeeOfProject) {
+        this.employeeOfProject = employeeOfProject;
+    }
+
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
+    }
+
     public EmployeeDto toDto() {
 
         EmployeeDto dto = new EmployeeDto();
         dto.employeeIdDto = this.getEmployeeId();
         dto.titleDto = this.getTitle();
         dto.personDto = this.person.toDto();
+        dto.isManager = this.isManager;
+        dto.managerOf = this.managerOf;
+        dto.employeeOfProject = this.employeeOfProject;
+
         return dto;
     }
 

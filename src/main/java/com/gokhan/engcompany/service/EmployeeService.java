@@ -33,4 +33,19 @@ public class EmployeeService {
     public EmployeeDto getEmployeeDto(Employee employee) {
         return toDto(employee);
     }
+
+    public Employee getManagerIfManager(int employeeId) {
+
+        Employee manager = repository.findById(employeeId).get();
+
+        if ( manager.isManager() == true) {
+            return manager;
+        } else { // custom throw add
+            return null;
+        }
+    }
+
+    public Employee getEmployeeEntity(int employeeId) {
+        return repository.findById(employeeId).get();
+    }
 }

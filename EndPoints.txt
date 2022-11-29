@@ -1,14 +1,13 @@
 * Head Department
 @PostMapping("create-head-department-with-name")
 
-@PutMapping("update-manager/{managerId}/{headDepartmentId}")
-
-@PostMapping("add-department/{departmentId}/{headDepartmentId}")
-
 @GetMapping("{headDepartmentId}")
 
 @DeleteMapping("{headDepartmentId}")
 
+@PutMapping("update-manager/{employeeId}/{headDepartmentId}")
+
+@PostMapping("add-department/{departmentId}/{headDepartmentId}")
 
 
 

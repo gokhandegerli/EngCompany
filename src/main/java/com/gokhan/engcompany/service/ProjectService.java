@@ -22,9 +22,6 @@ public class ProjectService {
     @Autowired
     ClientService clientService;
 
-    @Autowired
-    ManagerService managerService;
-
 
     public List<ProjectDto> getProjectDtoList(List<Project> projectList) {
         List<ProjectDto> projectDtoList = new ArrayList<>();
@@ -40,7 +37,7 @@ public class ProjectService {
         dto.projectIdDto = project.getProjectId();
         dto.nameDto = project.getName();
         dto.employeeDto =employeeService.getEmployeeDto(project.getEmployee());
-        dto.managerDto = managerService.getManagerDto(project.getManager().getManagerId());
+        dto.managerDto = project.getManager().toDto();
         dto.clientDto = clientService.getClientDto(project.getClient());
        return dto;
     }

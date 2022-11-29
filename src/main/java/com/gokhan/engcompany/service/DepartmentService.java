@@ -1,7 +1,10 @@
 package com.gokhan.engcompany.service;
 
 import com.gokhan.engcompany.dto.DepartmentDto;
+import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
+import com.gokhan.engcompany.entity.Employee;
+import com.gokhan.engcompany.entity.HeadDepartment;
 import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +19,10 @@ public class DepartmentService {
 
     @Autowired
     DepartmentRepository repository;
-
-    @Autowired
-    ManagerService managerService;
-
     @Autowired
     ProjectService projectService;
-
     @Autowired
     EmployeeService employeeService;
-
-    /*public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList) {
-        List<DepartmentDto> departmentDtoList = new ArrayList<>();
-        for(Department department:departmentList) {
-            departmentDtoList.add(toDto(department));
-        }
-        return departmentDtoList;
-    }*/
-
-/*    private DepartmentDto toDto(Department department) {
-
-        DepartmentDto dto = new DepartmentDto();
-        dto.departmentIdDto = department.getDepartmentId();
-        dto.departmentTypeDto = department.getDepartmentType();
-        if (department.getManager() != null) {
-            dto.managerDto = department.getManager().toDto();
-        }
-        dto.employeeDtoList = employeeService.getEmployeeDtoList(department.getEmployeeList());
-        dto.projectDtoList = projectService.getProjectDtoList(department.getProjectList());
-        return dto;
-    }*/
 
     public Department getDepartmentEntity(int departmentId) {
         return repository.findById(departmentId).get();
@@ -60,7 +37,7 @@ public class DepartmentService {
     }
 
     private void checkIfDepartmentExists(DepartmentType departmentType) {
-        if (repository.existsByDepartmentType(departmentType)) {
+        if (repository.existsByDepartmentType(departmentType).get()) {
             throw new EntityExistsException();
         }
 
@@ -84,5 +61,39 @@ public class DepartmentService {
         return repository.findById(departmentId).get().toDto();
     }
 
+
+    public DepartmentDto updateManager(int employeeId, int departmentId) {
+        Department department = repository.findById(departmentId).get();
+        Employee manager = employeeService.getManagerIfManager(employeeId);
+        if (manager != null) {
+            department.setManager(manager);
+            manager.setManagerOf(departmentId);
+        } else { // custom throw add
+            return null;
+        }
+        return repository.save(department).toDto();
+    }
+
+    public DepartmentDto addEmployee(int employeeId, int departmentId) {
+
+        if (repository.existsByDepartmentId(departmentId).get()) {
+            Department department = repository.findById(departmentId).get();
+            return (repository.save(checkIfEmployeeNotAPartOfAEmployeeList(department,employeeId))
+                    .toDto());
+        } else {
+            throw new EntityExistsException();
+        }
+    }
+
+    public Department checkIfEmployeeNotAPartOfAEmployeeList(Department department, int employeeId) {
+        if (department.getEmployeeList().stream().map(Employee::getEmployeeId).equals(employeeId)) {
+            throw new EntityExistsException();
+        } else {
+            Employee employee = employeeService.getEmployeeEntity(employeeId);
+            employee.setDepartment(department);
+            department.getEmployeeList().add(employee);
+            return  department;
+        }
+    }
 
 }

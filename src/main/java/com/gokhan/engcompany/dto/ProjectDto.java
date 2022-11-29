@@ -6,7 +6,7 @@ public class ProjectDto {
     public String nameDto;
     public ClientDto clientDto;
     public EmployeeDto employeeDto;
-    public ManagerDto managerDto;
+    public EmployeeDto managerDto;
 
     public String text;
 

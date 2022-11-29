@@ -7,7 +7,7 @@ import java.util.List;
 public class HeadDepartmentDto {
 
     public int headDepartmentIdDto;
-    public ManagerDto managerDto;
+    public EmployeeDto manager;
     public List<DepartmentDto> departmentDtoList;
     public DepartmentType departmentType;
 

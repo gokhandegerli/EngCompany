@@ -2,8 +2,9 @@ package com.gokhan.engcompany.entity;
 
 
 import com.gokhan.engcompany.dto.DepartmentDto;
-import com.gokhan.engcompany.dto.ManagerDto;
+import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.enums.DepartmentType;
+import org.apache.catalina.Manager;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Department {
     private int departmentId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Manager manager;
+    private Employee manager;
 
     @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
@@ -36,7 +37,7 @@ public class Department {
     public Department() {
     }
 
-    public Department(int departmentId, Manager manager, List<Employee> employeeList,
+    public Department(int departmentId, Employee manager, List<Employee> employeeList,
                       List<Project> projectList, HeadDepartment headDepartment, DepartmentType departmentType) {
         this.departmentId = departmentId;
         this.manager = manager;
@@ -54,19 +55,19 @@ public class Department {
         this.departmentId = departmentId;
     }
 
-    public Manager getManager() {
+    public Employee getManager() {
         return manager == null
                 ? null
                 : manager; //If else'in kısa hali
     }
 
-    public ManagerDto getManagerDto() {
+    public EmployeeDto getManagerDto() {
         return manager == null
                 ? null
                 : manager.toDto(); //If else'in kısa hali
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(Employee manager) {
         this.manager = manager;
     }
 

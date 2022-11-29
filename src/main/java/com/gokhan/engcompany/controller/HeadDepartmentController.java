@@ -29,23 +29,6 @@ public class HeadDepartmentController {
         }
     }
 
-    @PutMapping("update-manager/{managerId}/{headDepartmentId}")
-    public HeadDepartmentDto updateManager(@PathVariable (value="managerId") int managerId,
-                                           @PathVariable (value="headDepartmentId") int headDepartmentId) {
-        return service.updateManager(managerId, headDepartmentId);
-    }
-
-    @PostMapping("add-department/{departmentId}/{headDepartmentId}")
-    public HeadDepartmentDto addDepartment (@PathVariable (value="departmentId") int departmentId,
-                                         @PathVariable (value="headDepartmentId") int headDepartmentId) {
-
-        try {
-            return service.addDepartment(departmentId, headDepartmentId);
-        } catch (EntityExistsException ex) {
-            return new HeadDepartmentDto("FAILED, This department already exists!");
-        }
-    }
-
     @GetMapping("{headDepartmentId}")
     public HeadDepartmentDto getHeadDepartment(@PathVariable(name="headDepartmentId") int headDepartmentId) {
         return service.getHeadDepartment(headDepartmentId);
@@ -54,6 +37,23 @@ public class HeadDepartmentController {
     @DeleteMapping("{headDepartmentId}")
     public String deleteHeadDepartment(@PathVariable(name="headDepartmentId") int headDepartmentId) {
         return service.deleteHeadDepartment(headDepartmentId);
+    }
+
+    @PutMapping("update-manager/{employeeId}/{headDepartmentId}")
+    public HeadDepartmentDto updateManager(@PathVariable (value= "employeeId") int employeeId,
+                                           @PathVariable (value="headDepartmentId") int headDepartmentId) {
+        return service.updateManager(employeeId, headDepartmentId);
+    }
+
+    @PostMapping("add-department/{departmentId}/{headDepartmentId}")
+    public HeadDepartmentDto addDepartment (@PathVariable (value="departmentId") int departmentId,
+                                            @PathVariable (value="headDepartmentId") int headDepartmentId) {
+
+        try {
+            return service.addDepartment(departmentId, headDepartmentId);
+        } catch (EntityExistsException ex) {
+            return new HeadDepartmentDto("FAILED, This department already exists!");
+        }
     }
 
 }
