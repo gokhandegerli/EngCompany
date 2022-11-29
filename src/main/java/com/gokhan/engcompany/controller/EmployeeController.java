@@ -38,7 +38,6 @@ public class EmployeeController {
         return service.updateEmployee(employeeRequest, employeeId);
     }
 
-
     @GetMapping ("{employeeId}")
     public EmployeeDto getEmployee(@PathVariable (value="employeeId") int employeeId) {
         return service.getEmployeeDto(employeeId);

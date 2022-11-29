@@ -5,9 +5,9 @@
 
 @DeleteMapping("{headDepartmentId}")
 
-@PutMapping("update-manager/{employeeId}/{headDepartmentId}")
+@PutMapping("{headDepartmentId}/update-manager/{employeeId}")
 
-@PostMapping("add-department/{departmentId}/{headDepartmentId}")
+@PostMapping("{headDepartmentId}/add-department/{departmentId}")
 
 
 
@@ -19,9 +19,11 @@
 
 @DeleteMapping("{DepartmentId}")
 
-@PutMapping("update-manager/{employeeId}/{departmentId}")	
+@PutMapping("{departmentId}/update-manager/{employeeId}")	
 
-@PostMapping("add-employee/{employeeId}/{departmentId}")
+@PostMapping("{departmentId}/add-employee/{employeeId}")
+
+@PostMapping("{departmentId}/add-project/{projectId}")
 
 
 
@@ -29,6 +31,25 @@
 
 @PostMapping("create-project-with-name")
 
+
+
+* Employee
+
+@PostMapping("create-employee")
+
+@PostMapping("create-manager")
+
+@PostMapping("{employeeId}/promote-employee")
+
+@PutMapping("{employeeId}/update-employee")
+
+@GetMapping ("{employeeId}")
+
+@DeleteMapping("{employeeId}")
+
+
+
+*Client
 
 
 
