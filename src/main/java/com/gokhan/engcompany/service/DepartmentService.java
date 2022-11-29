@@ -77,7 +77,7 @@ public class DepartmentService {
 
     public DepartmentDto addEmployee(int employeeId, int departmentId) {
 
-        if (repository.existsByDepartmentId(departmentId).get()) {
+        if (repository.existsByDepartmentId(departmentId)) {
             Department department = repository.findById(departmentId).get();
             return (repository.save(checkIfEmployeeNotAPartOfAEmployeeList(department, employeeId))
                     .toDto());
@@ -87,6 +87,7 @@ public class DepartmentService {
     }
 
     public Department checkIfEmployeeNotAPartOfAEmployeeList(Department department, int employeeId) {
+        //stream olarak yazılacak, Berkay'a hatırlat.
         if (department.getEmployeeList().stream().map(Employee::getEmployeeId).equals(employeeId)) {
             throw new EntityExistsException();
         } else {
@@ -99,7 +100,7 @@ public class DepartmentService {
 
     public DepartmentDto addProject(int projectId, int departmentId) {
 
-        if (repository.existsByDepartmentId(departmentId).get()) {
+        if (repository.existsByDepartmentId(departmentId)) {
             Department department = repository.findById(departmentId).get();
             return (repository.save(checkIfProjectNotAPartOfAProjectList(department, projectId)).
                     toDto());

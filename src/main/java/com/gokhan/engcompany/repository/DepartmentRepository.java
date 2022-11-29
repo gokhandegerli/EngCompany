@@ -12,6 +12,6 @@ public interface DepartmentRepository extends JpaRepository<Department,Integer> 
 
     Optional<Boolean> existsByDepartmentType (DepartmentType departmentType);
 
-    Optional<Boolean> existsByDepartmentId (int DepartmentId);
+    boolean existsByDepartmentId (int departmentId);
 
 }

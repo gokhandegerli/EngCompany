@@ -21,7 +21,7 @@ public class EmployeeService {
 
         Employee manager = repository.findById(employeeId).get();
 
-        if ((manager.GetIsManager() == true)) {
+        if ((manager.isManager() == true)) {
             return manager;
         } else { // to be added custom throw
             return null;
@@ -65,7 +65,7 @@ public class EmployeeService {
         Employee employee = new Employee();
         employee.setPerson(personService.insert(employeeRequest.personRequest));
         employee.setTitle(employeeRequest.title);
-        employee.setIsManager(employeeRequest.isManager);
+        employee.isManager(employeeRequest.isManager);
         repository.save(employee);
         return employee.toDto();
     }
@@ -73,8 +73,8 @@ public class EmployeeService {
     public EmployeeDto promoteEmployee(EmployeeRequest employeeRequest, int employeeId) {
 
         Employee employee = getEmployeeEntity(employeeId);
-        if (!employee.GetIsManager()) {
-            employee.setIsManager(employeeRequest.isManager);
+        if (!employee.isManager()) {
+            employee.isManager(employeeRequest.isManager);
             employee.setTitle(employeeRequest.title);
             return repository.save(employee).toDto();
         } else {
@@ -96,7 +96,7 @@ public class EmployeeService {
         Employee employee = getEmployeeEntity(employeeId);
         employee.setTitle(employeeRequest.title);
         employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
-        employee.setIsManager(employeeRequest.isManager);
+        employee.isManager(employeeRequest.isManager);
         return employee.toDto();
     }
 }

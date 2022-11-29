@@ -23,19 +23,18 @@ public class Employee {
     private boolean isManager;
     private Integer managerOf;
 
-    //assign a project to an engineer
-    private Integer employeeOfProject;
+
+
 
 
     public Employee(int employeeId, Title title, Person person, Department department, boolean isManager,
-                    Integer managerOf, Integer employeeOfProject) {
+                    Integer managerOf) {
         this.employeeId = employeeId;
         this.title = title;
         this.person = person;
         this.department = department;
         this.isManager = isManager;
         this.managerOf = managerOf;
-        this.employeeOfProject = employeeOfProject;
     }
 
     public Employee() {
@@ -81,19 +80,12 @@ public class Employee {
         this.managerOf = managerOf;
     }
 
-    public Integer getEmployeeOfProject() {
-        return employeeOfProject;
-    }
 
-    public void setEmployeeOfProject(Integer employeeOfProject) {
-        this.employeeOfProject = employeeOfProject;
-    }
-
-    public boolean GetIsManager() {
+    public boolean isManager() {
         return isManager;
     }
 
-    public void setIsManager(boolean manager) {
+    public void isManager(boolean manager) {
         isManager = manager;
     }
 
@@ -104,7 +96,6 @@ public class Employee {
         dto.personDto = this.person.toDto();
         dto.isManager = this.isManager;
         dto.managerOf = this.managerOf;
-        dto.employeeOfProject = this.employeeOfProject;
         return dto;
     }
 
