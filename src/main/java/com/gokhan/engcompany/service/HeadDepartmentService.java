@@ -1,11 +1,13 @@
 package com.gokhan.engcompany.service;
 
+import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
 import com.gokhan.engcompany.entity.HeadDepartment;
 import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.repository.HeadDepartmentRepository;
+import com.gokhan.engcompany.request.HeadDepartmentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +26,10 @@ public class HeadDepartmentService {
     DepartmentService departmentService;
 
 
-    public HeadDepartmentDto createHeadDepartment(DepartmentType departmentType) {
-        checkIfHeadDepartmentExists(departmentType);
+    public HeadDepartmentDto createHeadDepartment(HeadDepartmentRequest headDepartmentRequest) {
+        checkIfHeadDepartmentExists(headDepartmentRequest.departmentType);
         HeadDepartment headDepartment = new HeadDepartment();
-        headDepartment.setDepartmentType(departmentType);
+        headDepartment.setDepartmentType(headDepartmentRequest.departmentType);
         repository.save(headDepartment);
         return headDepartment.toDto();
     }
@@ -58,7 +60,8 @@ public class HeadDepartmentService {
 
     }
 
-    public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment, int departmentId) {
+    public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
+                                                                     int departmentId) {
         if (headDepartment.getDepartmentList().stream().
                 map(Department::getDepartmentId).equals(departmentId)) {
             throw new EntityExistsException();
@@ -77,17 +80,29 @@ public class HeadDepartmentService {
         }
     }
 
-    public HeadDepartmentDto getHeadDepartment(int headDepartmentId) {
+    public HeadDepartment getHeadDepartmentEntity(int headDepartmentId) {
 
         HeadDepartment headDepartment = repository.findById(headDepartmentId).orElse(null);
-        return headDepartment.toDto();
+        return headDepartment;
     }
 
     public String deleteHeadDepartment(int headDepartmentId) {
 
-        repository.deleteById(headDepartmentId);
-        return "Bölüm silindi";
+        if (getHeadDepartmentEntity(headDepartmentId) != null) {
+            repository.deleteById(headDepartmentId);
+            return "Bölüm silindi";
+        } else {
+            return "Bölüm silinemedi, çünkü yok";
+        }
     }
 
+    public HeadDepartmentDto getHeadDepartmentDto(int headDepartmentId) {
 
+        HeadDepartment headDepartment = getHeadDepartmentEntity(headDepartmentId);
+        if ( headDepartment == null) {
+            return new HeadDepartmentDto("This Employee is not exist");
+        } else {
+            return headDepartment.toDto();
+        }
+    }
 }

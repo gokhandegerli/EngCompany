@@ -7,7 +7,7 @@ public class ProjectDto {
     public ClientDto clientDto;
     public EmployeeDto employeeDto;
     public EmployeeDto managerDto;
+    public DepartmentDto departmentDto;
 
-    public String text;
 
 }

@@ -99,6 +99,7 @@ public class Project {
         dto.employeeDto = this.employee.toDto();
         dto.managerDto = this.manager.toDto();
         dto.clientDto = this.client.toDto();
+        dto.departmentDto = this.department.toDto();
         return dto;
     }
 }

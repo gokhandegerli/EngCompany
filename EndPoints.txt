@@ -15,13 +15,20 @@
 
 @PostMapping("create-department-with-name")
 
+@GetMapping("{departmentId}")
+
 @DeleteMapping("{DepartmentId}")
 
-@GetMapping("{departmentId}")
+@PutMapping("update-manager/{employeeId}/{departmentId}")	
+
+@PostMapping("add-employee/{employeeId}/{departmentId}")
 
 
 
 * Project
+
+@PostMapping("create-project-with-name")
+
 
 
 

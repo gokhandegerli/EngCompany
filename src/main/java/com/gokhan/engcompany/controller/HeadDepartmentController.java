@@ -2,7 +2,7 @@ package com.gokhan.engcompany.controller;
 
 
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
-import com.gokhan.engcompany.enums.DepartmentType;
+import com.gokhan.engcompany.request.HeadDepartmentRequest;
 import com.gokhan.engcompany.service.HeadDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +20,10 @@ public class HeadDepartmentController {
 
     @PostMapping("create-head-department-with-name")
     //@ApiOperation(value="New head department create")
-    public HeadDepartmentDto createHeadDepartment(@RequestBody DepartmentType departmentType) {
+    public HeadDepartmentDto createHeadDepartment(@RequestBody HeadDepartmentRequest headDepartmentRequest) {
 
         try {
-            return service.createHeadDepartment(departmentType);
+            return service.createHeadDepartment(headDepartmentRequest);
         } catch (EntityExistsException ex) {
             return new HeadDepartmentDto("FAILED, This Head Department already exists!");
         }
@@ -31,7 +31,7 @@ public class HeadDepartmentController {
 
     @GetMapping("{headDepartmentId}")
     public HeadDepartmentDto getHeadDepartment(@PathVariable(name="headDepartmentId") int headDepartmentId) {
-        return service.getHeadDepartment(headDepartmentId);
+        return service.getHeadDepartmentDto(headDepartmentId);
     }
 
     @DeleteMapping("{headDepartmentId}")
@@ -39,13 +39,13 @@ public class HeadDepartmentController {
         return service.deleteHeadDepartment(headDepartmentId);
     }
 
-    @PutMapping("update-manager/{employeeId}/{headDepartmentId}")
+    @PutMapping("{headDepartmentId}/update-manager/{employeeId}")
     public HeadDepartmentDto updateManager(@PathVariable (value= "employeeId") int employeeId,
                                            @PathVariable (value="headDepartmentId") int headDepartmentId) {
         return service.updateManager(employeeId, headDepartmentId);
     }
 
-    @PostMapping("add-department/{departmentId}/{headDepartmentId}")
+    @PostMapping("{headDepartmentId}/add-department/{departmentId}")
     public HeadDepartmentDto addDepartment (@PathVariable (value="departmentId") int departmentId,
                                             @PathVariable (value="headDepartmentId") int headDepartmentId) {
 

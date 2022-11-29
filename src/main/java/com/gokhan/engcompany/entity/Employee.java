@@ -5,25 +5,25 @@ import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.enums.Title;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int employeeId;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Title title;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     @ManyToOne
     private Department department;
     private boolean isManager;
     private Integer managerOf;
+
+    //assign a project to an engineer
     private Integer employeeOfProject;
 
 
@@ -89,16 +89,15 @@ public class Employee {
         this.employeeOfProject = employeeOfProject;
     }
 
-    public boolean isManager() {
+    public boolean GetIsManager() {
         return isManager;
     }
 
-    public void setManager(boolean manager) {
+    public void setIsManager(boolean manager) {
         isManager = manager;
     }
 
     public EmployeeDto toDto() {
-
         EmployeeDto dto = new EmployeeDto();
         dto.employeeIdDto = this.getEmployeeId();
         dto.titleDto = this.getTitle();
@@ -106,10 +105,8 @@ public class Employee {
         dto.isManager = this.isManager;
         dto.managerOf = this.managerOf;
         dto.employeeOfProject = this.employeeOfProject;
-
         return dto;
     }
-
 
 
 }
