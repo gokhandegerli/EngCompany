@@ -29,7 +29,6 @@ public class Project {
     private Department department;
 
 
-
     public Project() {
     }
 

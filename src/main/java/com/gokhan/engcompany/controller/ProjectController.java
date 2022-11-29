@@ -22,7 +22,7 @@ public class ProjectController {
     ProjectService service;
 
 
-    @PostMapping("create-project-with-name")
+    @PostMapping()
     public ProjectDto createProject(@RequestBody ProjectRequest projectRequest) {
         return service.createProject(projectRequest);
     }

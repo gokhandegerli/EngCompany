@@ -18,7 +18,7 @@ public class HeadDepartmentController {
     @Autowired
     HeadDepartmentService service;
 
-    @PostMapping("create-head-department-with-name")
+    @PostMapping()
     //@ApiOperation(value="New head department create")
     public HeadDepartmentDto createHeadDepartment(@RequestBody HeadDepartmentRequest headDepartmentRequest) {
 

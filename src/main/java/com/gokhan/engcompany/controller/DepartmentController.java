@@ -18,7 +18,7 @@ public class DepartmentController {
     @Autowired
     DepartmentService service;
 
-    @PostMapping("create-department-with-name")
+    @PostMapping()
     public DepartmentDto createDepartment(@RequestBody DepartmentRequest departmentRequest) {
         return service.createDepartment(departmentRequest);
     }
