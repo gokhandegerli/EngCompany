@@ -69,6 +69,7 @@ public class DepartmentService {
         if (manager != null) {
             department.setManager(manager);
             manager.setManagerOf(departmentId);
+            manager.setDepartment(department);
         } else { // to be added custom throw
             return null;
         }
