@@ -1,12 +1,51 @@
-*
+* Head Department
 @PostMapping("create-head-department-with-name")
 
-@PutMapping("update-manager/{managerId}/{headDepartmentId}")
+@GetMapping("{headDepartmentId}")
+
+@DeleteMapping("{headDepartmentId}")
+
+@PutMapping("{headDepartmentId}/update-manager/{employeeId}")
+
+@PostMapping("{headDepartmentId}/add-department/{departmentId}")
 
 
 
+* Department
+
+@PostMapping("create-department-with-name")
+
+@GetMapping("{departmentId}")
+
+@DeleteMapping("{DepartmentId}")
+
+@PutMapping("{departmentId}/update-manager/{employeeId}")	
+
+@PostMapping("{departmentId}/add-employee/{employeeId}")
+
+@PostMapping("{departmentId}/add-project/{projectId}")
 
 
+
+* Project
+
+@PostMapping("create-project-with-name")
+
+
+
+* Employee
+
+@PostMapping("create-employee")
+
+@PostMapping("create-manager")
+
+@PostMapping("{employeeId}/promote-employee")
+
+@PutMapping("{employeeId}/update-employee")
+
+@GetMapping ("{employeeId}")
+
+@DeleteMapping("{employeeId}")
 
 
 

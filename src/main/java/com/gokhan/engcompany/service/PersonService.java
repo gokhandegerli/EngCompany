@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -18,30 +20,34 @@ public class PersonService {
 
     public Person insert(PersonRequest personRequest) {
 
-        checkPersonExist(personRequest.identityNumber);
+        checkByPersonIdentityNumber(personRequest.identityNumber);
         Person person = new Person();
-        person.setFirstName(personRequest.firstName);
-        person.setLastName(personRequest.lastName);
-        person.setIdentityNumber(personRequest.identityNumber);
-        person.seteEmail(personRequest.eMail);
-        person.setAddress(personRequest.address);
-        person.setCompanyName(personRequest.companyName);
-        return repository.save(person);
+        return setPersonRequestToPerson(personRequest, person);
     }
-
-    private void checkPersonExist(String identityNumber) {
-        if (repository.existsByIdentityNumber(identityNumber)){
-            throw new EntityExistsException();
-        }
-    }
-
 
     public PersonDto getPersonDto(Person person) {
 
         return person.toDto();
     }
 
+    public void checkByPersonIdentityNumber(String identityNumber) {
+        if (repository.existsByIdentityNumber(identityNumber).get()){
+            throw new EntityExistsException();
+        }
+    }
 
+    public Person update(PersonRequest personRequest, int personId) {
+        Person person = repository.findById(personId).get();
+        return setPersonRequestToPerson(personRequest, person);
+    }
 
-
+    private Person setPersonRequestToPerson(PersonRequest personRequest, Person person) {
+        person.setFirstName(personRequest.firstName);
+        person.setLastName(personRequest.lastName);
+        person.setIdentityNumber(personRequest.identityNumber);
+        person.setEmail(personRequest.eMail);
+        person.setAddress(personRequest.address);
+        person.setCompanyName(personRequest.companyName);
+        return repository.save(person);
+    }
 }

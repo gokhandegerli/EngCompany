@@ -9,7 +9,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int personId;
+    private Integer personId;
     @Column(nullable=false)
     private String firstName;
     @Column(nullable=false)
@@ -25,7 +25,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(int personId, String firstName, String lastName, String identityNumber, String email,
+    public Person(Integer personId, String firstName, String lastName, String identityNumber, String email,
                   String address, String companyName) {
         this.personId = personId;
         this.firstName = firstName;
@@ -40,8 +40,10 @@ public class Person {
         return personId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPersonId(Integer personId) {
+        if(personId!=null) {
+            this.personId = personId;
+        }
     }
 
     public String getFirstName() {
@@ -49,7 +51,9 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if(firstName!=null) {
+            this.firstName = firstName;
+        }
     }
 
     public String getLastName() {
@@ -57,7 +61,9 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if(lastName!=null) {
+            this.lastName = lastName;
+        }
     }
 
     public String getIdentityNumber() {
@@ -65,14 +71,16 @@ public class Person {
     }
 
     public void setIdentityNumber(String identityNumber) {
-        this.identityNumber = identityNumber;
+        if(identityNumber!=null) {
+            this.identityNumber = identityNumber;
+        }
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void seteEmail(String eMail) {
+    public void setEmail(String eMail) {
         this.email = eMail;
     }
 
@@ -81,7 +89,9 @@ public class Person {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if(address!=null) {
+            this.address = address;
+        }
     }
 
     public String getCompanyName() {
@@ -89,7 +99,9 @@ public class Person {
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+        if(companyName!=null) {
+            this.companyName = companyName;
+        }
     }
 
     public PersonDto toDto() {

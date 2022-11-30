@@ -1,6 +1,7 @@
 package com.gokhan.engcompany.entity;
 
 import com.gokhan.engcompany.dto.ProjectDto;
+import org.apache.catalina.Manager;
 
 import javax.persistence.*;
 
@@ -22,18 +23,17 @@ public class Project {
     private Employee employee;
 
     @OneToOne
-    private Manager manager;
+    private Employee manager;
 
     @ManyToOne
     private Department department;
-
 
 
     public Project() {
     }
 
     public Project(int projectId, String name, Client client, Employee employee,
-                   Manager manager, Department department) {
+                   Employee manager, Department department) {
         this.projectId = projectId;
         this.name = name;
         this.client = client;
@@ -74,11 +74,11 @@ public class Project {
         this.employee = employee;
     }
 
-    public Manager getManager() {
+    public Employee getManager() {
         return manager;
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(Employee manager) {
         this.manager = manager;
     }
 
@@ -98,6 +98,7 @@ public class Project {
         dto.employeeDto = this.employee.toDto();
         dto.managerDto = this.manager.toDto();
         dto.clientDto = this.client.toDto();
+        dto.departmentDto = this.department.toDto();
         return dto;
     }
 }

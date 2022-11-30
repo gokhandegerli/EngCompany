@@ -7,7 +7,18 @@ public class EmployeeDto {
     public int employeeIdDto;
     public PersonDto personDto;
     public Title titleDto;
+    public boolean isManager;
+    public Integer managerOf;
+    public Integer employeeOfProject;
 
+    public String message = "Success";
+
+    public EmployeeDto (String message) {
+        this.message = message;
+    }
+
+    public EmployeeDto () {
+    }
 
 
 }
