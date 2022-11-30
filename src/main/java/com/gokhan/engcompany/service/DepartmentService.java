@@ -41,7 +41,7 @@ public class DepartmentService {
     }
 
     protected void checkIfDepartmentExists(DepartmentType departmentType) {
-        if (repository.existsByDepartmentType(departmentType).get()) {
+        if (repository.existsByDepartmentType(departmentType)) {
             throw new EntityExistsException();
         }
     }

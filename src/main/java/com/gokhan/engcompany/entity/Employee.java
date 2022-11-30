@@ -23,7 +23,7 @@ public class Employee {
     private boolean isManager;
     private Integer managerOf;
 
-
+    //assign a project to an engineer: OneToOne Engineer engineer field added to Project entity.
 
 
 

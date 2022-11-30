@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department,Integer> {
 
-    Optional<Boolean> existsByDepartmentType (DepartmentType departmentType);
+    boolean existsByDepartmentType (DepartmentType departmentType);
 
     boolean existsByDepartmentId (int departmentId);
 
