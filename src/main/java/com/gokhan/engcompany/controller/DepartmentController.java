@@ -40,7 +40,7 @@ public class DepartmentController {
 
     //assign/add an engineer to a team
     @PostMapping("{departmentId}/add-employee/{employeeId}")
-    public DepartmentDto addDepartment (@PathVariable (value="employeeId") int employeeId,
+    public DepartmentDto addEmployee (@PathVariable (value="employeeId") int employeeId,
                                         @PathVariable (value= "departmentId") int departmentId) {
         try {
             return service.addEmployee(employeeId, departmentId);
@@ -58,5 +58,29 @@ public class DepartmentController {
             return new DepartmentDto("FAILED, This project already a part of this department!");
         }
     }
+
+    @PostMapping("{departmentId}/remove-employee/{employeeId}")
+    public DepartmentDto removeEmployee (@PathVariable (value="employeeId") int employeeId,
+                                      @PathVariable (value= "departmentId") int departmentId) {
+        try {
+            return service.removeEmployee(employeeId, departmentId);
+        } catch (EntityExistsException ex) {
+            return new DepartmentDto("FAILED, Department not exist or " +
+                    "this employee is not a part of this department!");
+        }
+    }
+
+    @PostMapping("{departmentId}/remove-project/{projectId}")
+    public DepartmentDto removeProject (@PathVariable (value="projectId") int projectId,
+                                     @PathVariable (value= "departmentId") int departmentId) {
+        try {
+            return service.removeProject(projectId, departmentId);
+        } catch (EntityExistsException ex) {
+            return new DepartmentDto("FAILED, Department not exist or" +
+                    " this project is not a part of this department!");
+        }
+    }
+
+
 
 }

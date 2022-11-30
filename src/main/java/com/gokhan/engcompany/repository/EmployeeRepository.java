@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
+    boolean existsByEmployeeId (int employeeId);
 
 }
