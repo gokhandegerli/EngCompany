@@ -36,7 +36,7 @@ public class Person {
         this.companyName = companyName;
     }
 
-    public int getPersonId() {
+    public Integer getPersonId() {
         return personId;
     }
 

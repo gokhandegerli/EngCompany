@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -41,11 +39,11 @@ public class PersonService {
         return setPersonRequestToPerson(personRequest, person);
     }
 
-    private Person setPersonRequestToPerson(PersonRequest personRequest, Person person) {
+    public Person setPersonRequestToPerson(PersonRequest personRequest, Person person) {
         person.setFirstName(personRequest.firstName);
         person.setLastName(personRequest.lastName);
         person.setIdentityNumber(personRequest.identityNumber);
-        person.setEmail(personRequest.eMail);
+        person.setEmail(personRequest.email);
         person.setAddress(personRequest.address);
         person.setCompanyName(personRequest.companyName);
         return repository.save(person);

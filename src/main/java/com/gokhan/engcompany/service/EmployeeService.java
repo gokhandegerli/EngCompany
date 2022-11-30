@@ -60,8 +60,8 @@ public class EmployeeService {
         }
     }
 
-    private EmployeeDto createAndSetEmployee(EmployeeRequest employeeRequest) {
-        personService.checkByPersonIdentityNumber(employeeRequest.personRequest.identityNumber);
+    public EmployeeDto createAndSetEmployee(EmployeeRequest employeeRequest) {
+        //personService.checkByPersonIdentityNumber(employeeRequest.personRequest.identityNumber);
         Employee employee = new Employee();
         employee.setPerson(personService.insert(employeeRequest.personRequest));
         employee.setTitle(employeeRequest.title);
