@@ -2,10 +2,13 @@ package com.gokhan.engcompany.service;
 
 import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.entity.Employee;
+import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.repository.EmployeeRepository;
 import com.gokhan.engcompany.request.EmployeeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityExistsException;
 
 @Service
 public class EmployeeService {
@@ -98,5 +101,13 @@ public class EmployeeService {
         employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
         employee.isManager(employeeRequest.isManager);
         return employee.toDto();
+    }
+
+    protected boolean checkIfEmployeeExists(int employeeId ) {
+        if (repository.existsByEmployeeId(employeeId)) {
+            return true;
+        } else {
+            throw new EntityExistsException();
+        }
     }
 }

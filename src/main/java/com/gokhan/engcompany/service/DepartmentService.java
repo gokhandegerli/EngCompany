@@ -124,11 +124,32 @@ public class DepartmentService {
     public DepartmentDto getDepartmentDto(int departmentId) {
 
         Department department = getDepartmentEntity(departmentId);
-        if ( department == null) {
+        if (department == null) {
             return new DepartmentDto("This Employee is not exist");
         } else {
             return department.toDto();
         }
     }
-    
+
+    public DepartmentDto removeEmployee(int employeeId, int departmentId) {
+        if (repository.existsByDepartmentId(departmentId)
+                && employeeService.checkIfEmployeeExists(employeeId)) {
+            Department department = repository.findById(departmentId).get();
+            department.getEmployeeList().remove(employeeId);
+            return (department.toDto());
+        } else {
+            throw new EntityExistsException();
+        }
+    }
+
+    public DepartmentDto removeProject(int projectId, int departmentId) {
+        if (repository.existsByDepartmentId(departmentId)
+                && projectService.checkIfProjectExists(projectId)) {
+            Department department = repository.findById(departmentId).get();
+            department.getProjectList().remove(projectId);
+            return (department.toDto());
+        } else {
+            throw new EntityExistsException();
+        }
+    }
 }

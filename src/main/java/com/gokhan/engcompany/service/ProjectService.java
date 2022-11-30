@@ -2,7 +2,6 @@ package com.gokhan.engcompany.service;
 
 
 import com.gokhan.engcompany.dto.ProjectDto;
-import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Project;
 import com.gokhan.engcompany.repository.ProjectRepository;
 import com.gokhan.engcompany.request.ProjectRequest;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ProjectService {
@@ -33,16 +30,27 @@ public class ProjectService {
 
     public ProjectDto createProject(ProjectRequest projectRequest) {
 
-        checkIfProjectExists(projectRequest.name);
+        checkIfProjectExistsWithName(projectRequest.name);
         Project project = new Project();
         project.setName(projectRequest.name);
         repository.save(project);
         return project.toDto();
     }
 
-    private void checkIfProjectExists(String name) {
-        if (repository.existsByName(name).get()) {
+    private void checkIfProjectExistsWithName(String name) {
+        if (repository.existsByName(name)) {
             throw new EntityExistsException();
         }
     }
+
+    protected boolean checkIfProjectExists(int projectId ) {
+        if (repository.existsByProjectId(projectId)) {
+            return true;
+        } else {
+            throw new EntityExistsException();
+        }
+    }
+
+
+
 }
