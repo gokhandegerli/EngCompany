@@ -18,6 +18,7 @@ public class Employee {
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
+    // with below field we have assigned an employee to a team
     @ManyToOne
     private Department department;
     private boolean isManager;

@@ -22,6 +22,7 @@ public class Department {
     @OneToOne(cascade = CascadeType.ALL)
     private Employee manager;
 
+    // with below field we have assigned an employee to a team
     @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
 
