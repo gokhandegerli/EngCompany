@@ -24,6 +24,7 @@ public class HeadDepartment {
     @OneToMany (mappedBy = MAP_CAT,cascade = CascadeType.ALL)
     private List<Department> departmentList = new ArrayList<>();
 
+    @Column(nullable = false)
     @Enumerated (EnumType.STRING)
     private DepartmentType departmentType;
 

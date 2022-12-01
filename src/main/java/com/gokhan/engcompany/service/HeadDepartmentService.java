@@ -1,6 +1,5 @@
 package com.gokhan.engcompany.service;
 
-import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
@@ -27,7 +26,7 @@ public class HeadDepartmentService {
 
 
     public HeadDepartmentDto createHeadDepartment(HeadDepartmentRequest headDepartmentRequest) {
-        checkIfHeadDepartmentExists(headDepartmentRequest.departmentType);
+        checkIfHeadDepartmentExistsWithName(headDepartmentRequest.departmentType);
         HeadDepartment headDepartment = new HeadDepartment();
         headDepartment.setDepartmentType(headDepartmentRequest.departmentType);
         repository.save(headDepartment);
@@ -41,7 +40,6 @@ public class HeadDepartmentService {
         Employee manager = employeeService.getManagerIfManager(employeeId);
         if (manager != null) {
             headDepartment.setManager(manager);
-            manager.setManagerOf(headDepartmentId);
         } else { // custom throw add
             return null;
         }
@@ -50,7 +48,7 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto addDepartment(int departmentId, int headDepartmentId) {
 
-        if (repository.existsByHeadDepartmentId(headDepartmentId).get()) {
+        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
             HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
             return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment,departmentId))
                     .toDto());
@@ -74,7 +72,7 @@ public class HeadDepartmentService {
     }
 
 
-    private void checkIfHeadDepartmentExists(DepartmentType departmentType) {
+    private void checkIfHeadDepartmentExistsWithName(DepartmentType departmentType) {
         if (repository.existsByDepartmentType(departmentType)) {
             throw new EntityExistsException();
         }
@@ -82,7 +80,7 @@ public class HeadDepartmentService {
 
     public HeadDepartment getHeadDepartmentEntity(int headDepartmentId) {
 
-        HeadDepartment headDepartment = repository.findById(headDepartmentId).orElse(null);
+        HeadDepartment headDepartment = repository.findByHeadDepartmentId(headDepartmentId);
         return headDepartment;
     }
 
@@ -100,9 +98,21 @@ public class HeadDepartmentService {
 
         HeadDepartment headDepartment = getHeadDepartmentEntity(headDepartmentId);
         if ( headDepartment == null) {
-            return new HeadDepartmentDto("This Employee is not exist");
+            return new HeadDepartmentDto("This HeadDepartment is not exist");
         } else {
             return headDepartment.toDto();
+        }
+    }
+
+    public HeadDepartmentDto removeDepartment(int departmentId, int headDepartmentId) {
+
+        if (repository.existsByHeadDepartmentId(headDepartmentId)
+                && departmentService.checkIfDepartmentExists(departmentId)) {
+            HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
+            headDepartment.getDepartmentList().remove(departmentId);
+            return (headDepartment.toDto());
+        } else {
+            throw new EntityExistsException();
         }
     }
 }

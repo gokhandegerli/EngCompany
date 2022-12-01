@@ -32,6 +32,7 @@ public class Department {
     @ManyToOne
     private HeadDepartment headDepartment;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DepartmentType departmentType;
 

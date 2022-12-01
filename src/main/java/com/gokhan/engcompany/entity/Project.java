@@ -1,6 +1,8 @@
 package com.gokhan.engcompany.entity;
 
 import com.gokhan.engcompany.dto.ProjectDto;
+import com.gokhan.engcompany.enums.ProjectStatus;
+import com.gokhan.engcompany.enums.Title;
 import org.apache.catalina.Manager;
 
 import javax.persistence.*;
@@ -27,6 +29,10 @@ public class Project {
 
     @ManyToOne
     private Department department;
+
+    @Column(nullable = false)
+    @Enumerated (EnumType.STRING)
+    private ProjectStatus projectStatus;
 
 
     public Project() {

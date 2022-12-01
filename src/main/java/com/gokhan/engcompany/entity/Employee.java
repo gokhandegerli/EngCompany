@@ -13,6 +13,7 @@ public class Employee {
     private int employeeId;
 
     @Column(nullable = false)
+    @Enumerated (EnumType.STRING)
     private Title title;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -22,20 +23,20 @@ public class Employee {
     @ManyToOne
     private Department department;
     private boolean isManager;
-    private Integer managerOf;
+
+    //private Integer managerOf;
 
     //assign a project to an engineer: OneToOne Engineer engineer field added to Project entity.
 
 
 
-    public Employee(int employeeId, Title title, Person person, Department department, boolean isManager,
-                    Integer managerOf) {
+    public Employee(int employeeId, Title title, Person person, Department department, boolean isManager) {
         this.employeeId = employeeId;
         this.title = title;
         this.person = person;
         this.department = department;
         this.isManager = isManager;
-        this.managerOf = managerOf;
+
     }
 
     public Employee() {
@@ -73,15 +74,6 @@ public class Employee {
         this.department = department;
     }
 
-    public Integer getManagerOf() {
-        return managerOf;
-    }
-
-    public void setManagerOf(Integer managerOf) {
-        this.managerOf = managerOf;
-    }
-
-
     public boolean isManager() {
         return isManager;
     }
@@ -96,7 +88,6 @@ public class Employee {
         dto.titleDto = this.getTitle();
         dto.personDto = this.person.toDto();
         dto.isManager = this.isManager;
-        dto.managerOf = this.managerOf;
         return dto;
     }
 

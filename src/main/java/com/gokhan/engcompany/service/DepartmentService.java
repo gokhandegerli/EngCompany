@@ -1,11 +1,8 @@
 package com.gokhan.engcompany.service;
 
 import com.gokhan.engcompany.dto.DepartmentDto;
-import com.gokhan.engcompany.dto.EmployeeDto;
-import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
-import com.gokhan.engcompany.entity.HeadDepartment;
 import com.gokhan.engcompany.entity.Project;
 import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.repository.DepartmentRepository;
@@ -33,15 +30,23 @@ public class DepartmentService {
     }
 
     public DepartmentDto createDepartment(DepartmentRequest departmentRequest) {
-        checkIfDepartmentExists(departmentRequest.departmentType);
+        checkIfDepartmentExistsWithName(departmentRequest.departmentType);
         Department department = new Department();
         department.setDepartmentType(departmentRequest.departmentType);
         repository.save(department);
         return department.toDto();
     }
 
-    protected void checkIfDepartmentExists(DepartmentType departmentType) {
+    protected void checkIfDepartmentExistsWithName(DepartmentType departmentType) {
         if (repository.existsByDepartmentType(departmentType)) {
+            throw new EntityExistsException();
+        }
+    }
+
+    protected boolean checkIfDepartmentExists(int departmentId) {
+        if (repository.existsByDepartmentId(departmentId)) {
+            return true;
+        } else {
             throw new EntityExistsException();
         }
     }
@@ -68,7 +73,6 @@ public class DepartmentService {
         Employee manager = employeeService.getManagerIfManager(employeeId);
         if (manager != null) {
             department.setManager(manager);
-            manager.setManagerOf(departmentId);
             manager.setDepartment(department);
         } else { // to be added custom throw
             return null;

@@ -1,6 +1,7 @@
 package com.gokhan.engcompany.controller;
 
 
+import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.request.HeadDepartmentRequest;
 import com.gokhan.engcompany.service.HeadDepartmentService;
@@ -12,14 +13,12 @@ import javax.persistence.EntityExistsException;
 
 @RestController
 @RequestMapping("head-departments")
-//@Api(value="Head Department api documentation")
 public class HeadDepartmentController {
 
     @Autowired
     HeadDepartmentService service;
 
     @PostMapping()
-    //@ApiOperation(value="New head department create")
     public HeadDepartmentDto createHeadDepartment(@RequestBody HeadDepartmentRequest headDepartmentRequest) {
 
         try {
@@ -52,7 +51,18 @@ public class HeadDepartmentController {
         try {
             return service.addDepartment(departmentId, headDepartmentId);
         } catch (EntityExistsException ex) {
-            return new HeadDepartmentDto("FAILED, This department already exists!");
+            return new HeadDepartmentDto("FAILED, This Head Department not exist!");
+        }
+    }
+
+    @PostMapping("{headDepartmentId}/remove-department/{departmentId}")
+    public HeadDepartmentDto removeDepartment (@PathVariable (value="departmentId") int departmentId,
+                                        @PathVariable (value= "headDepartmentId") int headDepartmentId) {
+        try {
+            return service.removeDepartment(departmentId, headDepartmentId);
+        } catch (EntityExistsException ex) {
+            return new HeadDepartmentDto("FAILED, HeadDepartment not exist and/or" +
+                    " this department is not a part of this HeadDepartment!");
         }
     }
 
