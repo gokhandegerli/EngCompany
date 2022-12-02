@@ -51,7 +51,7 @@ public class HeadDepartmentController {
         try {
             return service.addDepartment(departmentId, headDepartmentId);
         } catch (EntityExistsException ex) {
-            return new HeadDepartmentDto("FAILED, This Head Department not exist!");
+            return new HeadDepartmentDto("FAILED, This Department is  already in the list!");
         }
     }
 

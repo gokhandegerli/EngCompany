@@ -29,7 +29,7 @@ public class HeadDepartmentService {
         checkIfHeadDepartmentExistsWithName(headDepartmentRequest.departmentType);
         HeadDepartment headDepartment = new HeadDepartment();
         headDepartment.setDepartmentType(headDepartmentRequest.departmentType);
-        repository.save(headDepartment);
+        headDepartment = repository.save(headDepartment);
         return headDepartment.toDto();
     }
 
@@ -50,7 +50,7 @@ public class HeadDepartmentService {
 
         if (repository.existsByHeadDepartmentId(headDepartmentId)) {
             HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-            return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment,departmentId))
+            return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment, departmentId))
                     .toDto());
         } else {
             throw new EntityExistsException();
@@ -60,14 +60,16 @@ public class HeadDepartmentService {
 
     public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
                                                                      int departmentId) {
-        if (headDepartment.getDepartmentList().stream().
-                map(Department::getDepartmentId).equals(departmentId)) {
+
+        boolean alreadyExist = headDepartment.getDepartmentList().stream().anyMatch(department1 -> Integer.valueOf(
+                department1.getDepartmentId()).equals(Integer.valueOf(departmentId)));
+        if (alreadyExist) {
             throw new EntityExistsException();
         } else {
             Department department = departmentService.getDepartmentEntity(departmentId);
             department.setHeadDepartment(headDepartment);
             headDepartment.getDepartmentList().add(department);
-            return  headDepartment;
+            return headDepartment;
         }
     }
 
@@ -97,7 +99,7 @@ public class HeadDepartmentService {
     public HeadDepartmentDto getHeadDepartmentDto(int headDepartmentId) {
 
         HeadDepartment headDepartment = getHeadDepartmentEntity(headDepartmentId);
-        if ( headDepartment == null) {
+        if (headDepartment == null) {
             return new HeadDepartmentDto("This HeadDepartment is not exist");
         } else {
             return headDepartment.toDto();

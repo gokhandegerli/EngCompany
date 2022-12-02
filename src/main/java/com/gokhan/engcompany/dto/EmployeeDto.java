@@ -8,8 +8,6 @@ public class EmployeeDto {
     public PersonDto personDto;
     public Title titleDto;
     public boolean isManager;
-    public Integer managerOf;
-    public Integer employeeOfProject;
 
     public String message = "Success";
 

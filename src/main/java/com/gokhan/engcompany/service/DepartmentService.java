@@ -33,7 +33,7 @@ public class DepartmentService {
         checkIfDepartmentExistsWithName(departmentRequest.departmentType);
         Department department = new Department();
         department.setDepartmentType(departmentRequest.departmentType);
-        repository.save(department);
+        department = repository.save(department);
         return department.toDto();
     }
 
@@ -84,6 +84,7 @@ public class DepartmentService {
 
         if (repository.existsByDepartmentId(departmentId)) {
             Department department = repository.findById(departmentId).get();
+            //Employee employee = employeeService.getEmployeeEntity(employee);
             return (repository.save(checkIfEmployeeNotAPartOfAEmployeeList(department, employeeId))
                     .toDto());
         } else {
@@ -93,7 +94,10 @@ public class DepartmentService {
 
     public Department checkIfEmployeeNotAPartOfAEmployeeList(Department department, int employeeId) {
         //stream olarak yazılacak, Berkay'a hatırlat.
-        if (department.getEmployeeList().stream().map(Employee::getEmployeeId).equals(employeeId)) {
+
+        boolean alreadyExist  = department.getEmployeeList().stream().anyMatch(employee1 -> Integer.valueOf(employee1.
+                                getEmployeeId()).equals(Integer.valueOf(employeeId)));
+        if (alreadyExist) {
             throw new EntityExistsException();
         } else {
             Employee employee = employeeService.getEmployeeEntity(employeeId);

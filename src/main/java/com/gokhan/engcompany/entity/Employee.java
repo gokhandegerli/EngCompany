@@ -55,7 +55,9 @@ public class Employee {
     }
 
     public void setTitle(Title title) {
-        this.title = title;
+        if(title!=null) {
+            this.title = title;
+        }
     }
 
     public Person getPerson() {

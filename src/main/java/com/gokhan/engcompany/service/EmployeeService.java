@@ -32,7 +32,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeEntity(int employeeId) {
-        return repository.findById(employeeId).get();
+        return repository.findByEmployeeId(employeeId).get();
     }
 
     public EmployeeDto getEmployeeDto(int employeeId) {
@@ -69,7 +69,7 @@ public class EmployeeService {
         employee.setPerson(personService.insert(employeeRequest.personRequest));
         employee.setTitle(employeeRequest.title);
         employee.isManager(employeeRequest.isManager);
-        repository.save(employee);
+        employee = repository.save(employee);
         return employee.toDto();
     }
 
@@ -97,10 +97,14 @@ public class EmployeeService {
 
     public EmployeeDto updateEmployee(EmployeeRequest employeeRequest, int employeeId) {
         Employee employee = getEmployeeEntity(employeeId);
-        employee.setTitle(employeeRequest.title);
         employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
-        employee.isManager(employeeRequest.isManager);
-        return employee.toDto();
+        if(employee.isManager()!=employeeRequest.isManager && employee.isManager() == false) {
+            promoteEmployee(employeeRequest, employeeId);
+        } else {
+            employee.setTitle(employeeRequest.title);
+            employee.isManager(employeeRequest.isManager);
+        }
+        return repository.save(employee).toDto();
     }
 
     protected boolean checkIfEmployeeExists(int employeeId ) {

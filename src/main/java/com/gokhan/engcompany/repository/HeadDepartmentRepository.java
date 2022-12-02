@@ -17,5 +17,5 @@ public interface HeadDepartmentRepository extends JpaRepository<HeadDepartment,I
 
     HeadDepartment findByHeadDepartmentId(int headDepartmentId);
 
-    HeadDepartment findHeadDepartmentByManager_EmployeeId(int employeeId);
+    HeadDepartment findHeadDepartmentByManager_EmployeeId(int managerId);
 }
