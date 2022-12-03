@@ -51,6 +51,16 @@ public class ProjectService {
         }
     }
 
-
-
+    public String deleteProject(int projectId) {
+        if(getProjectEntity(projectId)!= null) {
+            if(getProjectEntity(projectId).getDepartment()==null){
+                repository.deleteById(projectId);
+                return "Proje silindi";
+            } else {
+                return "Projeyi önce ilgili departmandan siliniz!";
+            }
+        } else {
+            return "Proje silinemedi, çünkü yok";
+        }
+    }
 }

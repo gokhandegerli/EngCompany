@@ -24,6 +24,7 @@ public class Employee {
     private Department department;
     private boolean isManager;
 
+
     //private Integer managerOf;
 
     //assign a project to an engineer: OneToOne Engineer engineer field added to Project entity.
@@ -76,11 +77,11 @@ public class Employee {
         this.department = department;
     }
 
-    public boolean isManager() {
+    public boolean setManager() {
         return isManager;
     }
 
-    public void isManager(boolean manager) {
+    public void setManager(boolean manager) {
         isManager = manager;
     }
 

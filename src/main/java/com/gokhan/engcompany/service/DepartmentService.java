@@ -140,25 +140,53 @@ public class DepartmentService {
         }
     }
 
-    public DepartmentDto removeEmployee(int employeeId, int departmentId) {
+    public DepartmentDto removeEmployee(int employeeId, int departmentId, boolean deleteEmployee) {
         if (repository.existsByDepartmentId(departmentId)
                 && employeeService.checkIfEmployeeExists(employeeId)) {
             Department department = repository.findById(departmentId).get();
-            department.getEmployeeList().remove(employeeId);
+            employeeService.getEmployeeEntity(employeeId).setDepartment(null);
+            department.getEmployeeList().removeIf(employee ->
+                    Integer.valueOf(employee.getEmployeeId()).equals(employeeId));
+            if(deleteEmployee==true){
+                employeeService.deleteEmployee(employeeId);
+            }
+            return (repository.save(department).toDto());
+        } else {
+            throw new EntityExistsException();
+        }
+    }
+
+    public DepartmentDto removeManager(int managerId, int departmentId, boolean deleteManager) {
+        if (repository.existsByDepartmentId(departmentId)
+                && employeeService.checkIfEmployeeExists(managerId)) {
+            Department department = repository.findById(departmentId).get();
+            department.getManager().setDepartment(null);
+            department.setManager(null);
+            department.getEmployeeList().removeIf(employee ->
+                    Integer.valueOf(employee.getEmployeeId()).equals(managerId));
+            if(deleteManager==true){
+                employeeService.deleteManager(managerId);
+            }
+            return (repository.save(department).toDto());
+        } else {
+            throw new EntityExistsException();
+        }
+    }
+
+    public DepartmentDto removeProject(int projectId, int departmentId, boolean deleteProject) {
+        if (repository.existsByDepartmentId(departmentId)
+                && projectService.checkIfProjectExists(projectId)) {
+            Department department = repository.findById(departmentId).get();
+            projectService.getProjectEntity(projectId).setDepartment(null);
+            department.getProjectList().removeIf(project ->
+                    Integer.valueOf(project.getProjectId()).equals(projectId));
+            if(deleteProject==true){
+                projectService.deleteProject(projectId);
+            }
             return (department.toDto());
         } else {
             throw new EntityExistsException();
         }
     }
 
-    public DepartmentDto removeProject(int projectId, int departmentId) {
-        if (repository.existsByDepartmentId(departmentId)
-                && projectService.checkIfProjectExists(projectId)) {
-            Department department = repository.findById(departmentId).get();
-            department.getProjectList().remove(projectId);
-            return (department.toDto());
-        } else {
-            throw new EntityExistsException();
-        }
-    }
 }

@@ -2,9 +2,7 @@ package com.gokhan.engcompany.controller;
 
 
 import com.gokhan.engcompany.dto.EmployeeDto;
-import com.gokhan.engcompany.dto.ProjectDto;
 import com.gokhan.engcompany.request.EmployeeRequest;
-import com.gokhan.engcompany.request.ProjectRequest;
 import com.gokhan.engcompany.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +41,14 @@ public class EmployeeController {
         return service.getEmployeeDto(employeeId);
     }
 
-    @DeleteMapping("{employeeId}")
+    @DeleteMapping("{employeeId}/delete-employee")
     public String deleteEmployee(@PathVariable (value="employeeId") int employeeId) {
         return service.deleteEmployee(employeeId);
+    }
+
+    @DeleteMapping("{managerId}/delete-manager")
+    public String deleteManager(@PathVariable (value="managerId") int managerId) {
+        return service.deleteManager(managerId);
     }
 
 }
