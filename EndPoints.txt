@@ -1,5 +1,5 @@
 * Head Department
-@PostMapping("create-head-department-with-name")
+@PostMapping()
 
 @GetMapping("{headDepartmentId}")
 
@@ -9,11 +9,14 @@
 
 @PostMapping("{headDepartmentId}/add-department/{departmentId}")
 
+@PostMapping("{headDepartmentId}/remove-department/{departmentId}")
+
+
 
 
 * Department
 
-@PostMapping("create-department-with-name")
+@PostMapping()
 
 @GetMapping("{departmentId}")
 
@@ -24,6 +27,12 @@
 @PostMapping("{departmentId}/add-employee/{employeeId}")
 
 @PostMapping("{departmentId}/add-project/{projectId}")
+
+@PostMapping("{departmentId}/remove-employee/{employeeId}/delete-employee/{deleteEmployee}")
+
+@PostMapping("{departmentId}/remove-manager/{managerId}/delete-manager/{deleteManager}")
+
+@PostMapping("{departmentId}/remove-project/{projectId}/delete-manager/{deleteProject}")
 
 
 
@@ -46,7 +55,6 @@
 @GetMapping ("{employeeId}")
 
 @DeleteMapping("{employeeId}")
-
 
 
 *Client

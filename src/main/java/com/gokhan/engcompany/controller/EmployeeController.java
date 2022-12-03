@@ -46,9 +46,6 @@ public class EmployeeController {
         return service.deleteEmployee(employeeId);
     }
 
-    @DeleteMapping("{managerId}/delete-manager")
-    public String deleteManager(@PathVariable (value="managerId") int managerId) {
-        return service.deleteManager(managerId);
-    }
+
 
 }

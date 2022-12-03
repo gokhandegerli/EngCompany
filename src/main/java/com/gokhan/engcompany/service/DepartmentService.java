@@ -165,7 +165,7 @@ public class DepartmentService {
             department.getEmployeeList().removeIf(employee ->
                     Integer.valueOf(employee.getEmployeeId()).equals(managerId));
             if(deleteManager==true){
-                employeeService.deleteManager(managerId);
+                employeeService.deleteEmployee(managerId);
             }
             return (repository.save(department).toDto());
         } else {

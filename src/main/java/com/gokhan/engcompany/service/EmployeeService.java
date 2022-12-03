@@ -118,16 +118,4 @@ public class EmployeeService {
         }
     }
 
-    public String deleteManager(int managerId) {
-        if (getEmployeeEntity(managerId) != null) {
-            if (getEmployeeEntity(managerId).getDepartment() == null) {
-                repository.deleteById(managerId);
-                return "Manager silindi";
-            } else {
-                return "Manager önce ilgili departmandan siliniz!";
-            }
-        } else {
-            return "Manager silinemedi, çünkü yok";
-        }
-    }
 }
