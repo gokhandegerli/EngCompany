@@ -11,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,7 +43,9 @@ public class ProjectService {
         checkIfProjectExistsWithName(projectRequest.name);
         Project project = new Project();
         project.setName(projectRequest.name);
-        repository.save(project);
+        project.setProjectStatus(projectRequest.projectStatus);
+        project.setStartDate(projectRequest.startDate);
+        project = repository.save(project);
         return project.toDto();
     }
 
@@ -78,4 +85,23 @@ public class ProjectService {
                 .map(Project::getEmployee)
                 .toList();
     }
+
+
+    public List<ProjectDto> checkDateOfProject (List<Project> projectList, int dateRange) {
+        LocalDate today = LocalDate.now();
+        List<Project> projectsInRange = new ArrayList<>();
+        for (Project project : projectList) {
+            if (project.getStartDate().isBefore(today.plusDays(dateRange))) {
+                projectsInRange.add(project);
+            }
+        }
+        return projectsInRange.stream().map(Project :: toDto).toList();
+    }
+
+    public List<ProjectDto> getProjectsStartThreeMonths() {
+        List<Project> allProjects = repository.findAll();
+        List<ProjectDto> projectsStartThreeMonths = checkDateOfProject(allProjects,90);
+        return projectsStartThreeMonths;
+    }
+
 }
