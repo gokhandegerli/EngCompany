@@ -7,6 +7,8 @@ import com.gokhan.engcompany.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
@@ -46,6 +48,9 @@ public class EmployeeController {
         return service.deleteEmployee(employeeId);
     }
 
-
+    @GetMapping("get-project-free-employees")
+    public List<EmployeeDto> getProjectFreeEmployees() {
+        return service.getProjectFreeEmployees();
+    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -17,6 +18,9 @@ public class EmployeeService {
 
     @Autowired
     PersonService personService;
+
+    @Autowired
+    ProjectService projectService;
 
 
     public Employee getManagerIfManager(int employeeId) {
@@ -116,6 +120,15 @@ public class EmployeeService {
         } else {
             throw new EntityExistsException();
         }
+    }
+
+    public List<EmployeeDto> getProjectFreeEmployees() {
+        List<Employee> allEmployees = repository.findAll();
+        List<Employee> assignedEmployees = projectService.getProjectWithEmployees(allEmployees);
+        return allEmployees.stream()
+                .filter(employee -> !assignedEmployees.contains(employee))
+                .map(Employee::toDto) //forEach ile map farkı, biri void döner, biri ise tip döner.
+                .toList();
     }
 
 }
