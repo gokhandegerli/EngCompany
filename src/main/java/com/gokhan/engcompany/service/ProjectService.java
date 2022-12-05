@@ -2,13 +2,16 @@ package com.gokhan.engcompany.service;
 
 
 import com.gokhan.engcompany.dto.ProjectDto;
+import com.gokhan.engcompany.entity.Employee;
 import com.gokhan.engcompany.entity.Project;
+import com.gokhan.engcompany.repository.EmployeeRepository;
 import com.gokhan.engcompany.repository.ProjectRepository;
 import com.gokhan.engcompany.request.ProjectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -17,7 +20,9 @@ public class ProjectService {
     ProjectRepository repository;
 
     @Autowired
-    EmployeeService employeeService;
+    EmployeeRepository employeeRepository;
+
+
 
     @Autowired
     ClientService clientService;
@@ -66,5 +71,11 @@ public class ProjectService {
 
     public ProjectDto getProjectDto(int projectId) {
         return getProjectEntity(projectId).toDto();
+    }
+
+    public List<Employee> getProjectWithEmployees(List<Employee> allEmployees) {
+        return repository.findProjectsWithEmployees(allEmployees).stream()
+                .map(Project::getEmployee)
+                .toList();
     }
 }
