@@ -63,4 +63,8 @@ public class ProjectService {
             return "Proje silinemedi, çünkü yok";
         }
     }
+
+    public ProjectDto getProjectDto(int projectId) {
+        return getProjectEntity(projectId).toDto();
+    }
 }

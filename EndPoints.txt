@@ -38,7 +38,11 @@
 
 * Project
 
-@PostMapping("create-project-with-name")
+@PostMapping()
+
+@GetMapping("{projectId}")
+
+@DeleteMapping("{projectId}/delete-project")
 
 
 

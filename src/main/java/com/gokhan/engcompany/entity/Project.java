@@ -39,13 +39,14 @@ public class Project {
     }
 
     public Project(int projectId, String name, Client client, Employee employee,
-                   Employee manager, Department department) {
+                   Employee manager, Department department, ProjectStatus projectStatus) {
         this.projectId = projectId;
         this.name = name;
         this.client = client;
         this.employee = employee;
         this.manager = manager;
         this.department = department;
+        this.projectStatus = projectStatus;
     }
 
     public int getProjectId() {
@@ -96,6 +97,14 @@ public class Project {
         this.department = department;
     }
 
+    public ProjectStatus getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
     public ProjectDto toDto() {
 
         ProjectDto dto = new ProjectDto();
@@ -105,6 +114,7 @@ public class Project {
         dto.managerDto = this.manager.toDto();
         dto.clientDto = this.client.toDto();
         dto.departmentDto = this.department.toDto();
+        dto.projectStatus = this.projectStatus;
         return dto;
     }
 }
