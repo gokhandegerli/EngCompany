@@ -31,6 +31,7 @@ public class Project {
     private Employee manager;
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @Column(nullable = false)

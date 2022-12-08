@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
@@ -189,4 +190,20 @@ public class DepartmentService {
         }
     }
 
+    public DepartmentDto updateDepartment(int departmentId, DepartmentRequest departmentRequest) {
+
+        Optional<Department> department = repository.findById(departmentId);
+        if (department.isPresent()) {
+            department.get().setDepartmentType(departmentRequest.departmentType);
+            return repository.save(department.get()).toDto();
+        }
+        return null;
+    }
+
+    public List<DepartmentDto> getDepartmentsOfHeadDepartment(int headDepartmentId) {
+
+        return repository.findByHeadDepartmentHeadDepartmentId(headDepartmentId).stream()
+                .map(Department::toDto)
+                .toList();
+    }
 }

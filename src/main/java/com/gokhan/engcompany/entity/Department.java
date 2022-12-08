@@ -97,14 +97,6 @@ public class Department {
         this.departmentType = departmentName;
     }
 
-    public HeadDepartment getGroup() {
-        return headDepartment;
-    }
-
-    public void setGroup(HeadDepartment headDepartment) {
-        this.headDepartment = headDepartment;
-    }
-
     public HeadDepartment getHeadDepartment() {
         return headDepartment;
     }

@@ -2,7 +2,9 @@ package com.gokhan.engcompany.controller;
 
 
 import com.gokhan.engcompany.dto.DepartmentDto;
+import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
+import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.request.DepartmentRequest;
 import com.gokhan.engcompany.service.DepartmentService;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 
 @RestController
 @RequestMapping("departments")
@@ -21,6 +24,12 @@ public class DepartmentController {
     @PostMapping()
     public DepartmentDto createDepartment(@RequestBody DepartmentRequest departmentRequest) {
         return service.createDepartment(departmentRequest);
+    }
+
+    @PutMapping("{departmentId}")
+    public DepartmentDto updateDepartment(@PathVariable(value = "departmentId") int departmentId,
+                                          @RequestBody DepartmentRequest departmentRequest) {
+        return service.updateDepartment(departmentId, departmentRequest);
     }
 
     @GetMapping("{departmentId}")
@@ -65,7 +74,7 @@ public class DepartmentController {
                                         @PathVariable(value = "departmentId") int departmentId,
                                         @PathVariable(value = "deleteEmployee") boolean deleteEmployee) {
         try {
-            return service.removeEmployee(employeeId, departmentId,deleteEmployee);
+            return service.removeEmployee(employeeId, departmentId, deleteEmployee);
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, Department not exist or " +
                     "this employee is not a part of this department!");
@@ -74,17 +83,17 @@ public class DepartmentController {
 
     @PostMapping("{departmentId}/remove-manager/{managerId}/delete-manager/{deleteManager}")
     public DepartmentDto removeManager(@PathVariable(value = "managerId") int managerId,
-                                        @PathVariable(value = "departmentId") int departmentId,
-                                        @PathVariable(value = "deleteManager") boolean deleteManager) {
+                                       @PathVariable(value = "departmentId") int departmentId,
+                                       @PathVariable(value = "deleteManager") boolean deleteManager) {
         try {
-            return service.removeManager(managerId, departmentId,deleteManager);
+            return service.removeManager(managerId, departmentId, deleteManager);
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, Department not exist or " +
                     "this manager is not a part of this department!");
         }
     }
 
-    @PostMapping("{departmentId}/remove-project/{projectId}/delete-manager/{deleteProject}")
+    @PostMapping("{departmentId}/remove-project/{projectId}/delete-project/{deleteProject}")
     public DepartmentDto removeProject(@PathVariable(value = "projectId") int projectId,
                                        @PathVariable(value = "departmentId") int departmentId,
                                        @PathVariable(value = "deleteProject") boolean deleteProject) {
@@ -94,6 +103,12 @@ public class DepartmentController {
             return new DepartmentDto("FAILED, Department not exist or" +
                     " this project is not a part of this department!");
         }
+    }
+
+    @GetMapping("/{headDepartmentId}/departments-of-head-department")
+    public List<DepartmentDto> getDepartmentsOfHeadDepartment(@PathVariable(value = "headDepartmentId")
+                                                           int headDepartmentId) {
+        return service.getDepartmentsOfHeadDepartment(headDepartmentId);
     }
 
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.Optional;
 
 @Service
 public class HeadDepartmentService {
@@ -117,4 +118,16 @@ public class HeadDepartmentService {
             throw new EntityExistsException();
         }
     }
+
+    public HeadDepartmentDto updateHeadDepartment(HeadDepartmentRequest headDepartmentRequest,
+                                                  int headDepartmentId) {
+        Optional<HeadDepartment> headDepartment = repository.findById(headDepartmentId);
+        if (headDepartment.isPresent()) {
+            headDepartment.get().setDepartmentType(headDepartmentRequest.departmentType);
+            return repository.save(headDepartment.get()).toDto();
+        }
+        return null;
+    }
+
+
 }

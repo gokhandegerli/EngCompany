@@ -2,7 +2,9 @@ package com.gokhan.engcompany.controller;
 
 
 import com.gokhan.engcompany.dto.DepartmentDto;
+import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
+import com.gokhan.engcompany.request.EmployeeRequest;
 import com.gokhan.engcompany.request.HeadDepartmentRequest;
 import com.gokhan.engcompany.service.HeadDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,12 @@ public class HeadDepartmentController {
         } catch (EntityExistsException ex) {
             return new HeadDepartmentDto("FAILED, This Head Department already exists!");
         }
+    }
+
+    @PutMapping("{headDepartmentId}/update-headDepartment")
+    public HeadDepartmentDto updateHeadDepartment(@RequestBody HeadDepartmentRequest headDepartmentRequest,
+                                      @PathVariable (value="headDepartmentId") int headDepartmentId) {
+        return service.updateHeadDepartment(headDepartmentRequest, headDepartmentId);
     }
 
     @GetMapping("{headDepartmentId}")

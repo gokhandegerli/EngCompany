@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -27,7 +28,7 @@ public class EmployeeService {
 
         Employee manager = repository.findById(employeeId).get();
 
-        if ((manager.setManager() == true)) {
+        if ((manager.getManager() == true)) {
             return manager;
         } else { // to be added custom throw
             return null;
@@ -79,7 +80,7 @@ public class EmployeeService {
     public EmployeeDto promoteEmployee(EmployeeRequest employeeRequest, int employeeId) {
 
         Employee employee = getEmployeeEntity(employeeId);
-        if (!employee.setManager()) {
+        if (!employee.getManager()) {
             employee.setManager(employeeRequest.isManager);
             employee.setTitle(employeeRequest.title);
             return repository.save(employee).toDto();
@@ -105,7 +106,7 @@ public class EmployeeService {
     public EmployeeDto updateEmployee(EmployeeRequest employeeRequest, int employeeId) {
         Employee employee = getEmployeeEntity(employeeId);
         employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
-        if (employee.setManager() != employeeRequest.isManager && employee.setManager() == false) {
+        if (employee.getManager() != employeeRequest.isManager && employee.getManager() == false) {
             promoteEmployee(employeeRequest, employeeId);
         } else {
             employee.setTitle(employeeRequest.title);
@@ -131,4 +132,13 @@ public class EmployeeService {
                 .toList();
     }
 
+    public List<EmployeeDto> getAllEmployees() {
+        return repository.findAll().stream().map(Employee::toDto).toList();
+    }
+
+    public List<EmployeeDto> getADepartmentEmployees(int departmentId) {
+        return repository.findByDepartmentDepartmentId(departmentId).stream()
+                .map(Employee::toDto)
+                .toList();
+    }
 }
