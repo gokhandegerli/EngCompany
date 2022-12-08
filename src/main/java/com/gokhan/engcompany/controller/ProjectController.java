@@ -12,6 +12,8 @@ import com.gokhan.engcompany.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("projects")
 public class ProjectController {
@@ -33,6 +35,11 @@ public class ProjectController {
     @DeleteMapping("{projectId}/delete-project")
     public String deleteProject(@PathVariable (value="projectId") int projectId) {
         return service.deleteProject(projectId);
+    }
+
+    @GetMapping("get-projects-start-within-3-months")
+    public List<ProjectDto> getProjectsStartThreeMonths(){
+        return service.getProjectsStartThreeMonths();
     }
 
 
