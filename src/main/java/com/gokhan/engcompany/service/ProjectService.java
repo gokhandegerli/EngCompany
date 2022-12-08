@@ -96,6 +96,11 @@ public class ProjectService {
             }
         }
         return projectsInRange.stream().map(Project :: toDto).toList();
+
+       /* return projectList.stream() // alternatif, stream şeklinde olan.
+                .filter(project -> project.getStartDate().isBefore(today.plusDays(dateRange)))
+                .map(Project::toDto)
+                .toList();*/
     }
 
     public List<ProjectDto> getProjectsStartThreeMonths() {
