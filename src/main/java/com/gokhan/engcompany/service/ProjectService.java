@@ -183,7 +183,11 @@ public class ProjectService {
     }
 
     private Project checkIfManagerNotAssignedProject(Project project, int managerId) {
-        boolean alreadyExist  = Integer.valueOf(project.getManager().getEmployeeId()).equals(managerId);
+
+        boolean alreadyExist = false;
+        if(project.getManager() !=null) {
+            alreadyExist = Integer.valueOf(project.getManager().getEmployeeId()).equals(managerId);
+        }
         if (alreadyExist) {
             throw new EntityExistsException();
         } else {
@@ -220,7 +224,10 @@ public class ProjectService {
     }
 
     private Project checkIfClientNotAssignedProject(Project project, int clientId) {
-        boolean alreadyExist  = Integer.valueOf(project.getClient().getClientId()).equals(clientId);
+        boolean alreadyExist = false;
+        if(project.getClient() !=null) {
+            alreadyExist = Integer.valueOf(project.getClient().getClientId()).equals(clientId);
+        }
         if (alreadyExist) {
             throw new EntityExistsException();
         } else {

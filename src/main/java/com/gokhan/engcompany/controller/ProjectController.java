@@ -39,7 +39,7 @@ public class ProjectController {
         return service.getProjectDto(projectId);
     }
 
-    @DeleteMapping("{projectId}/delete-project")
+    @DeleteMapping("{projectId}")
     public String deleteProject(@PathVariable(value = "projectId") int projectId) {
         return service.deleteProject(projectId);
     }
@@ -54,7 +54,7 @@ public class ProjectController {
         return service.getAllProjects();
     }
 
-    @GetMapping("{departmentId}")
+    @GetMapping("{departmentId}/get-a-department-projects")
     public List<ProjectDto> getADepartmentProjects(@PathVariable(value = "departmentId") int departmentId) {
         return service.getADepartmentProjects(departmentId);
     }

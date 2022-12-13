@@ -34,7 +34,7 @@ public class ClientController {
         return service.getClientDto(clientId);
     }
 
-    @DeleteMapping("{clientId}/delete-client")
+    @DeleteMapping("{clientId}")
     public String deleteClient(@PathVariable (value="clientId") int clientId) {
         return service.deleteClient(clientId);
     }

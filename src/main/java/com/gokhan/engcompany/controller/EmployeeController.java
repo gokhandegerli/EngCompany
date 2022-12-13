@@ -43,7 +43,7 @@ public class EmployeeController {
         return service.getEmployeeDto(employeeId);
     }
 
-    @DeleteMapping("{employeeId}/delete-employee")
+    @DeleteMapping("{employeeId}")
     public String deleteEmployee(@PathVariable (value="employeeId") int employeeId) {
         return service.deleteEmployee(employeeId);
     }
