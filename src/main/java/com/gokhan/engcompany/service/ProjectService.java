@@ -142,7 +142,10 @@ public class ProjectService {
 
     private Project checkIfEmployeeNotAssignedProject(Project project, int employeeId) {
 
-        boolean alreadyExist  = Integer.valueOf(project.getEmployee().getEmployeeId()).equals(employeeId);
+        boolean alreadyExist = false;
+        if(project.getEmployee() !=null) {
+            alreadyExist = Integer.valueOf(project.getEmployee().getEmployeeId()).equals(employeeId);
+        }
         if (alreadyExist) {
             throw new EntityExistsException();
         } else {
@@ -150,6 +153,7 @@ public class ProjectService {
             project.setEmployee(employee);
             return project;
         }
+
     }
 
     public ProjectDto removeEmployee(int employeeId, int projectId, boolean deleteEmployee) {

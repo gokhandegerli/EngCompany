@@ -24,7 +24,7 @@ public class Project {
     @OneToOne
     private Client client;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Employee employee;
 
     @OneToOne
@@ -156,7 +156,7 @@ public class Project {
         dto.employeeDto = this.getEmployeeDto();
         dto.managerDto = this.getManagerDto();
         dto.clientDto = this.getClientDto();
-        dto.departmentDto = this.getDepartmentDto();
+        //dto.departmentDto = this.getDepartmentDto();
         dto.projectStatus = this.projectStatus;
         dto.startDate = this.startDate;
         return dto;

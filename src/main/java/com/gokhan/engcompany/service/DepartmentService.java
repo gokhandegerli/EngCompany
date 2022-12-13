@@ -121,7 +121,12 @@ public class DepartmentService {
 
     private Department checkIfProjectNotAPartOfAProjectList(Department department, int projectId) {
 
-        if (department.getProjectList().stream().map(Project::getProjectId).equals(projectId)) {
+        boolean alreadyExist = department.getProjectList().stream().anyMatch(project1 -> Integer.valueOf(project1.
+                        getProjectId()).equals(Integer.valueOf(projectId)));
+
+        //department.getProjectList().stream().map(Project::getProjectId).equals(projectId);
+
+        if (alreadyExist) {
             throw new EntityExistsException();
         } else {
             Project project = projectService.getProjectEntity(projectId);
@@ -184,7 +189,7 @@ public class DepartmentService {
             if(deleteProject==true){
                 projectService.deleteProject(projectId);
             }
-            return (department.toDto());
+            return (repository.save(department).toDto());
         } else {
             throw new EntityExistsException();
         }

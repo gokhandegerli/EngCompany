@@ -53,6 +53,7 @@ public class ClientService {
 
     public String deleteClient(int clientId) {
         if (getClientEntity(clientId) != null) {
+            repository.deleteById(clientId);
             return "Kişi silindi";
         } else {
             return "Kişi silinemedi, çünkü yok";

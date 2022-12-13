@@ -35,6 +35,7 @@ public class PersonService {
     }
 
     public Person update(PersonRequest personRequest, int personId) {
+        checkByPersonIdentityNumber(personRequest.identityNumber);
         Person person = repository.findById(personId).get();
         return setPersonRequestToPerson(personRequest, person);
     }

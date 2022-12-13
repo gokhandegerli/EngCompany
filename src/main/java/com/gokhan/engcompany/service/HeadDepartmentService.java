@@ -112,8 +112,10 @@ public class HeadDepartmentService {
         if (repository.existsByHeadDepartmentId(headDepartmentId)
                 && departmentService.checkIfDepartmentExists(departmentId)) {
             HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-            headDepartment.getDepartmentList().remove(departmentId);
-            return (headDepartment.toDto());
+            Department department = departmentService.getDepartmentEntity(departmentId);
+            department.setHeadDepartment(null);
+            headDepartment.getDepartmentList().remove(department);
+            return (repository.save(headDepartment).toDto());
         } else {
             throw new EntityExistsException();
         }

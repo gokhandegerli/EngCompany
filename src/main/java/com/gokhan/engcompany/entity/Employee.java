@@ -94,6 +94,4 @@ public class Employee {
         dto.isManager = this.isManager;
         return dto;
     }
-
-
 }

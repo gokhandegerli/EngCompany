@@ -26,7 +26,7 @@ public class Department {
     @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Project> projectList = new ArrayList<>();
 
     @ManyToOne
@@ -111,7 +111,8 @@ public class Department {
         dto.departmentTypeDto = this.getDepartmentType();
         dto.managerDto = this.getManagerDto();
         dto.employeeDtoList = this.employeeList.stream().map(Employee::toDto).toList();
-        dto.projectDtoList = this.projectList.stream().map(Project::toDto).toList(); // Project list'i stream'e sokuyor,
+        dto.projectDtoList = this.projectList.stream().map(Project::toDto).toList();
+        // Project list'i stream'e sokuyor,
         //map'liyor ve listedeki her elemanı (her bir proje nesnesini) Project entity içindeki toDto metodundan geçirip,
         //tekrar liste olarak geri dönüyor.
         return dto;
