@@ -23,7 +23,7 @@ public class ClientController {
         return service.createClient(clientRequest);
     }
 
-    @PutMapping("{clientId}/update-client")
+    @PutMapping("{clientId}")
     public ClientDto updateClient(@RequestBody ClientRequest clientRequest,
                                   @PathVariable(value = "clientId") int clientId) {
         return service.updateClient(clientRequest, clientId);

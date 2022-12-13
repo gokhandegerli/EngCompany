@@ -32,7 +32,7 @@ public class EmployeeController {
         return service.promoteEmployee(employeeRequest, employeeId);
     }
 
-    @PutMapping("{employeeId}/update-employee")
+    @PutMapping("{employeeId}")
     public EmployeeDto updateEmployee(@RequestBody EmployeeRequest employeeRequest,
                                       @PathVariable (value="employeeId") int employeeId) {
         return service.updateEmployee(employeeRequest, employeeId);

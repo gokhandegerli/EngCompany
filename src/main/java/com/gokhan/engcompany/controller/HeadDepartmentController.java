@@ -30,7 +30,7 @@ public class HeadDepartmentController {
         }
     }
 
-    @PutMapping("{headDepartmentId}/update-headDepartment")
+    @PutMapping("{headDepartmentId}")
     public HeadDepartmentDto updateHeadDepartment(@RequestBody HeadDepartmentRequest headDepartmentRequest,
                                       @PathVariable (value="headDepartmentId") int headDepartmentId) {
         return service.updateHeadDepartment(headDepartmentRequest, headDepartmentId);
