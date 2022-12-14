@@ -3,6 +3,7 @@ package com.gokhan.engcompany.controller;
 
 import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.EmployeeDto;
+import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.dto.ProjectDto;
 import com.gokhan.engcompany.request.DepartmentRequest;
 import com.gokhan.engcompany.request.ProjectRequest;
@@ -31,7 +32,11 @@ public class ProjectController {
     @PutMapping("{projectId}")
     public ProjectDto updateProject(@PathVariable(value = "projectId") int projectId,
                                     @RequestBody ProjectRequest projectRequest) {
-        return service.updateProject(projectId, projectRequest);
+        try {
+            return service.updateProject(projectId, projectRequest);
+        } catch (EntityExistsException ex) {
+            return new ProjectDto("FAILED, This Project not exists!");
+        }
     }
 
     @GetMapping("{projectId}")
@@ -54,10 +59,6 @@ public class ProjectController {
         return service.getAllProjects();
     }
 
-    @GetMapping("{departmentId}/get-a-department-projects")
-    public List<ProjectDto> getADepartmentProjects(@PathVariable(value = "departmentId") int departmentId) {
-        return service.getADepartmentProjects(departmentId);
-    }
 
     @PostMapping("{projectId}/add-employee/{employeeId}")
     public ProjectDto addEmployee(@PathVariable(value = "employeeId") int employeeId,
@@ -115,8 +116,8 @@ public class ProjectController {
 
     @PostMapping("{projectId}/remove-client/{clientId}/delete-client/{deleteClient}")
     public ProjectDto removeClient(@PathVariable(value = "clientId") int clientId,
-                                    @PathVariable(value = "projectId") int projectId,
-                                    @PathVariable(value = "deleteClient") boolean deleteClient) {
+                                   @PathVariable(value = "projectId") int projectId,
+                                   @PathVariable(value = "deleteClient") boolean deleteClient) {
         try {
             return service.removeClient(clientId, projectId, deleteClient);
         } catch (EntityExistsException ex) {

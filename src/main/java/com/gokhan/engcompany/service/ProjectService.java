@@ -86,18 +86,18 @@ public class ProjectService {
 
     public List<ProjectDto> checkDateOfProject(List<Project> projectList, int dateRange) {
         LocalDate today = LocalDate.now();
-        List<Project> projectsInRange = new ArrayList<>();
+        return projectList.stream() // alternatif, stream şeklinde olan.
+                .filter(project -> project.getStartDate().isBefore(today.plusDays(dateRange)))
+                .map(Project::toDto)
+                .toList();
+
+/*        List<Project> projectsInRange = new ArrayList<>();
         for (Project project : projectList) {
             if (project.getStartDate().isBefore(today.plusDays(dateRange))) {
                 projectsInRange.add(project);
             }
         }
-        return projectsInRange.stream().map(Project::toDto).toList();
-
-       /* return projectList.stream() // alternatif, stream şeklinde olan.
-                .filter(project -> project.getStartDate().isBefore(today.plusDays(dateRange)))
-                .map(Project::toDto)
-                .toList();*/
+        return projectsInRange.stream().map(Project::toDto).toList();*/
     }
 
     public List<ProjectDto> getProjectsStartThreeMonths() {
@@ -115,7 +115,7 @@ public class ProjectService {
             project.get().setStartDate(projectRequest.startDate);
             return repository.save(project.get()).toDto();
         }
-        return null;
+        throw new EntityExistsException();
     }
 
     public List<ProjectDto> getAllProjects() {
@@ -123,28 +123,19 @@ public class ProjectService {
     }
 
 
-    public List<ProjectDto> getADepartmentProjects(int departmentId) {
-        return repository.findByDepartmentDepartmentId(departmentId).stream()
-                .map(Project::toDto)
-                .toList();
-    }
-
     public ProjectDto addEmployee(int employeeId, int projectId) {
 
-        if (repository.existsByProjectId(projectId)){
-            Project project = repository.findById(projectId).get();
-            return (repository.save(checkIfEmployeeNotAssignedProject(project, employeeId))
-                    .toDto());
-        } else {
-            throw new EntityExistsException();
-        }
+        Optional<Project> project = repository.findById(projectId);
+        return (repository.save(checkIfEmployeeNotAssignedProject(project
+                        .orElseThrow(() -> new EntityExistsException()), employeeId))
+                        .toDto());
     }
 
     private Project checkIfEmployeeNotAssignedProject(Project project, int employeeId) {
 
         boolean alreadyExist = false;
-        if(project.getEmployee() !=null) {
-            alreadyExist = Integer.valueOf(project.getEmployee().getEmployeeId()).equals(employeeId);
+        if (project.getEmployee() != null) {
+            alreadyExist = project.getEmployee().getEmployeeId() == employeeId;
         }
         if (alreadyExist) {
             throw new EntityExistsException();
@@ -162,7 +153,7 @@ public class ProjectService {
                 && employeeRepository.existsByEmployeeId(employeeId)) {
             Project project = repository.findById(projectId).get();
             project.setEmployee(null);
-            if(deleteEmployee==true){
+            if (deleteEmployee == true) {
                 employeeRepository.deleteById(employeeId);
             }
             return (repository.save(project).toDto());
@@ -173,7 +164,7 @@ public class ProjectService {
 
 
     public ProjectDto addManager(int managerId, int projectId) {
-        if (repository.existsByProjectId(projectId)){
+        if (repository.existsByProjectId(projectId)) {
             Project project = repository.findById(projectId).get();
             return (repository.save(checkIfManagerNotAssignedProject(project, managerId))
                     .toDto());
@@ -185,8 +176,8 @@ public class ProjectService {
     private Project checkIfManagerNotAssignedProject(Project project, int managerId) {
 
         boolean alreadyExist = false;
-        if(project.getManager() !=null) {
-            alreadyExist = Integer.valueOf(project.getManager().getEmployeeId()).equals(managerId);
+        if (project.getManager() != null) {
+            alreadyExist = project.getManager().getEmployeeId() == managerId;
         }
         if (alreadyExist) {
             throw new EntityExistsException();
@@ -203,7 +194,7 @@ public class ProjectService {
                 && employeeRepository.existsByEmployeeId(managerId)) {
             Project project = repository.findById(projectId).get();
             project.setManager(null);
-            if(deleteManager==true){
+            if (deleteManager == true) {
                 employeeRepository.deleteById(managerId);
             }
             return (repository.save(project).toDto());
@@ -214,7 +205,7 @@ public class ProjectService {
 
 
     public ProjectDto addClient(int clientId, int projectId) {
-        if (repository.existsByProjectId(projectId)){
+        if (repository.existsByProjectId(projectId)) {
             Project project = repository.findById(projectId).get();
             return (repository.save(checkIfClientNotAssignedProject(project, clientId))
                     .toDto());
@@ -225,8 +216,8 @@ public class ProjectService {
 
     private Project checkIfClientNotAssignedProject(Project project, int clientId) {
         boolean alreadyExist = false;
-        if(project.getClient() !=null) {
-            alreadyExist = Integer.valueOf(project.getClient().getClientId()).equals(clientId);
+        if (project.getClient() != null) {
+            alreadyExist = project.getClient().getClientId() == clientId;
         }
         if (alreadyExist) {
             throw new EntityExistsException();
@@ -242,7 +233,7 @@ public class ProjectService {
                 && clientRepository.existsById(clientId)) {
             Project project = repository.findById(projectId).get();
             project.setClient(null);
-            if(deleteClient==true){
+            if (deleteClient == true) {
                 clientRepository.deleteById(clientId);
             }
             return (repository.save(project).toDto());

@@ -4,6 +4,7 @@ package com.gokhan.engcompany.controller;
 import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
+import com.gokhan.engcompany.dto.ProjectDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.enums.DepartmentType;
 import com.gokhan.engcompany.request.DepartmentRequest;
@@ -105,11 +106,14 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/{headDepartmentId}/departments-of-head-department")
-    public List<DepartmentDto> getDepartmentsOfHeadDepartment(@PathVariable(value = "headDepartmentId")
-                                                           int headDepartmentId) {
-        return service.getDepartmentsOfHeadDepartment(headDepartmentId);
+    @GetMapping("/{departmentId}/employees")
+    public List<EmployeeDto> getADepartmentEmployees(@PathVariable(value = "departmentId") int departmentId) {
+        return service.getADepartmentEmployees(departmentId);
     }
 
+    @GetMapping("{departmentId}/projects")
+    public List<ProjectDto> getADepartmentProjects(@PathVariable(value = "departmentId") int departmentId) {
+        return service.getADepartmentProjects(departmentId);
+    }
 
 }

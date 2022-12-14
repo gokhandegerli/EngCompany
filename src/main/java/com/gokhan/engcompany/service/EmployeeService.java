@@ -136,9 +136,4 @@ public class EmployeeService {
         return repository.findAll().stream().map(Employee::toDto).toList();
     }
 
-    public List<EmployeeDto> getADepartmentEmployees(int departmentId) {
-        return repository.findByDepartmentDepartmentId(departmentId).stream()
-                .map(Employee::toDto)
-                .toList();
-    }
 }

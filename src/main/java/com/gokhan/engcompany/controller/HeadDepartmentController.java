@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 
 
 @RestController
@@ -72,6 +73,12 @@ public class HeadDepartmentController {
             return new HeadDepartmentDto("FAILED, HeadDepartment not exist and/or" +
                     " this department is not a part of this HeadDepartment!");
         }
+    }
+
+    @GetMapping("/{headDepartmentId}/departments")
+    public List<DepartmentDto> getDepartmentsOfHeadDepartment(@PathVariable(value = "headDepartmentId")
+                                                              int headDepartmentId) {
+        return service.getDepartmentsOfHeadDepartment(headDepartmentId);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.gokhan.engcompany.service;
 
 import com.gokhan.engcompany.dto.DepartmentDto;
+import com.gokhan.engcompany.dto.EmployeeDto;
+import com.gokhan.engcompany.dto.ProjectDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
 import com.gokhan.engcompany.entity.Project;
@@ -96,8 +98,8 @@ public class DepartmentService {
     public Department checkIfEmployeeNotAPartOfAEmployeeList(Department department, int employeeId) {
         //stream olarak yazılacak, Berkay'a hatırlat.
 
-        boolean alreadyExist  = department.getEmployeeList().stream().anyMatch(employee1 -> Integer.valueOf(employee1.
-                                getEmployeeId()).equals(Integer.valueOf(employeeId)));
+        boolean alreadyExist = department.getEmployeeList().stream().anyMatch(employee1 -> Integer.valueOf(employee1.
+                getEmployeeId()).equals(Integer.valueOf(employeeId)));
         if (alreadyExist) {
             throw new EntityExistsException();
         } else {
@@ -122,7 +124,7 @@ public class DepartmentService {
     private Department checkIfProjectNotAPartOfAProjectList(Department department, int projectId) {
 
         boolean alreadyExist = department.getProjectList().stream().anyMatch(project1 -> Integer.valueOf(project1.
-                        getProjectId()).equals(Integer.valueOf(projectId)));
+                getProjectId()).equals(Integer.valueOf(projectId)));
 
         //department.getProjectList().stream().map(Project::getProjectId).equals(projectId);
 
@@ -153,7 +155,7 @@ public class DepartmentService {
             employeeService.getEmployeeEntity(employeeId).setDepartment(null);
             department.getEmployeeList().removeIf(employee ->
                     Integer.valueOf(employee.getEmployeeId()).equals(employeeId));
-            if(deleteEmployee==true){
+            if (deleteEmployee == true) {
                 employeeService.deleteEmployee(employeeId);
             }
             return (repository.save(department).toDto());
@@ -170,7 +172,7 @@ public class DepartmentService {
             department.setManager(null);
             department.getEmployeeList().removeIf(employee ->
                     Integer.valueOf(employee.getEmployeeId()).equals(managerId));
-            if(deleteManager==true){
+            if (deleteManager == true) {
                 employeeService.deleteEmployee(managerId);
             }
             return (repository.save(department).toDto());
@@ -186,7 +188,7 @@ public class DepartmentService {
             projectService.getProjectEntity(projectId).setDepartment(null);
             department.getProjectList().removeIf(project ->
                     Integer.valueOf(project.getProjectId()).equals(projectId));
-            if(deleteProject==true){
+            if (deleteProject == true) {
                 projectService.deleteProject(projectId);
             }
             return (repository.save(department).toDto());
@@ -205,10 +207,17 @@ public class DepartmentService {
         return null;
     }
 
-    public List<DepartmentDto> getDepartmentsOfHeadDepartment(int headDepartmentId) {
+    public List<EmployeeDto> getADepartmentEmployees(int departmentId) {
+        return repository.findById(departmentId).get()
+                .getEmployeeList().stream()
+                .map(Employee::toDto)
+                .toList();
+    }
 
-        return repository.findByHeadDepartmentHeadDepartmentId(headDepartmentId).stream()
-                .map(Department::toDto)
+    public List<ProjectDto> getADepartmentProjects(int departmentId) {
+        return repository.findById(departmentId).get().getProjectList()
+                .stream()
+                .map(Project::toDto)
                 .toList();
     }
 }

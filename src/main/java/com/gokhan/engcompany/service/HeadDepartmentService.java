@@ -1,5 +1,6 @@
 package com.gokhan.engcompany.service;
 
+import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -132,4 +134,11 @@ public class HeadDepartmentService {
     }
 
 
+    public List<DepartmentDto> getDepartmentsOfHeadDepartment(int headDepartmentId) {
+
+        return repository.findById(headDepartmentId).get()
+                .getDepartmentList().stream()
+                .map(Department::toDto)
+                .toList();
+    }
 }
