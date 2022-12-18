@@ -51,28 +51,24 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto addDepartment(int departmentId, int headDepartmentId) {
 
-        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
-            HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-            return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment, departmentId))
-                    .toDto());
-        } else {
-            throw new EntityExistsException();
-        }
-
+        Optional<HeadDepartment> headDepartment = repository.findById(headDepartmentId);
+        checkIfDepartmentNotAPartOfADepartmentList(headDepartment
+                .orElseThrow(() -> new NullPointerException()),departmentId);
+        Department department = departmentService.getDepartmentEntity(departmentId);
+        department.setHeadDepartment(headDepartment.get());
+        headDepartment.get().getDepartmentList().add(department);
+        return repository.save(headDepartment.get()).toDto();
     }
 
-    public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
+    public void checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
                                                                      int departmentId) {
-
-        boolean alreadyExist = headDepartment.getDepartmentList().stream().anyMatch(department1 -> Integer.valueOf(
-                department1.getDepartmentId()).equals(Integer.valueOf(departmentId)));
+        boolean alreadyExist=false;
+        if (headDepartment.getDepartmentList() !=null) {
+            alreadyExist = headDepartment.getDepartmentList().stream().anyMatch(department1 -> department1.
+                    getDepartmentId() == departmentId);
+        }
         if (alreadyExist) {
             throw new EntityExistsException();
-        } else {
-            Department department = departmentService.getDepartmentEntity(departmentId);
-            department.setHeadDepartment(headDepartment);
-            headDepartment.getDepartmentList().add(department);
-            return headDepartment;
         }
     }
 
@@ -111,8 +107,7 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto removeDepartment(int departmentId, int headDepartmentId) {
 
-        if (repository.existsByHeadDepartmentId(headDepartmentId)
-                && departmentService.checkIfDepartmentExists(departmentId)) {
+        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
             HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
             Department department = departmentService.getDepartmentEntity(departmentId);
             department.setHeadDepartment(null);

@@ -24,7 +24,7 @@ public class Project {
     @OneToOne
     private Client client;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Employee employee;
 
     @OneToOne

@@ -52,14 +52,6 @@ public class ProjectService {
         }
     }
 
-    protected boolean checkIfProjectExists(int projectId) {
-        if (repository.existsByProjectId(projectId)) {
-            return true;
-        } else {
-            throw new EntityExistsException();
-        }
-    }
-
     public String deleteProject(int projectId) {
         if (getProjectEntity(projectId) != null) {
             if (getProjectEntity(projectId).getDepartment() == null) {
@@ -126,12 +118,14 @@ public class ProjectService {
     public ProjectDto addEmployee(int employeeId, int projectId) {
 
         Optional<Project> project = repository.findById(projectId);
-        return (repository.save(checkIfEmployeeNotAssignedProject(project
-                        .orElseThrow(() -> new EntityExistsException()), employeeId))
-                        .toDto());
+        checkIfEmployeeNotAssignedProject(project
+                .orElseThrow(() -> new NullPointerException()),employeeId);
+        Employee employee = employeeRepository.findById(employeeId).get();
+        project.get().setEmployee(employee);
+        return repository.save(project.get()).toDto();
     }
 
-    private Project checkIfEmployeeNotAssignedProject(Project project, int employeeId) {
+    private void checkIfEmployeeNotAssignedProject(Project project, int employeeId) {
 
         boolean alreadyExist = false;
         if (project.getEmployee() != null) {
@@ -139,23 +133,14 @@ public class ProjectService {
         }
         if (alreadyExist) {
             throw new EntityExistsException();
-        } else {
-            Employee employee = employeeRepository.findByEmployeeId(employeeId).get();
-            project.setEmployee(employee);
-            return project;
         }
-
     }
 
-    public ProjectDto removeEmployee(int employeeId, int projectId, boolean deleteEmployee) {
+    public ProjectDto removeEmployee(int projectId) {
 
-        if (repository.existsByProjectId(projectId)
-                && employeeRepository.existsByEmployeeId(employeeId)) {
+        if (repository.existsByProjectId(projectId)) {
             Project project = repository.findById(projectId).get();
             project.setEmployee(null);
-            if (deleteEmployee == true) {
-                employeeRepository.deleteById(employeeId);
-            }
             return (repository.save(project).toDto());
         } else {
             throw new EntityExistsException();
@@ -164,16 +149,16 @@ public class ProjectService {
 
 
     public ProjectDto addManager(int managerId, int projectId) {
-        if (repository.existsByProjectId(projectId)) {
-            Project project = repository.findById(projectId).get();
-            return (repository.save(checkIfManagerNotAssignedProject(project, managerId))
-                    .toDto());
-        } else {
-            throw new EntityExistsException();
-        }
+
+        Optional<Project> project = repository.findById(projectId);
+        checkIfManagerNotAssignedProject(project
+                .orElseThrow(() -> new NullPointerException()),managerId);
+        Employee manager = employeeRepository.findById(managerId).get();
+        project.get().setManager(manager);
+        return repository.save(project.get()).toDto();
     }
 
-    private Project checkIfManagerNotAssignedProject(Project project, int managerId) {
+    private void checkIfManagerNotAssignedProject(Project project, int managerId) {
 
         boolean alreadyExist = false;
         if (project.getManager() != null) {
@@ -181,61 +166,44 @@ public class ProjectService {
         }
         if (alreadyExist) {
             throw new EntityExistsException();
-        } else {
-            Employee manager = employeeRepository.findByEmployeeId(managerId).get();
-            project.setManager(manager);
-            return project;
         }
     }
 
-    public ProjectDto removeManager(int managerId, int projectId, boolean deleteManager) {
+    public ProjectDto removeManager(int projectId) {
 
-        if (repository.existsByProjectId(projectId)
-                && employeeRepository.existsByEmployeeId(managerId)) {
+        if (repository.existsByProjectId(projectId)) {
             Project project = repository.findById(projectId).get();
             project.setManager(null);
-            if (deleteManager == true) {
-                employeeRepository.deleteById(managerId);
-            }
             return (repository.save(project).toDto());
         } else {
             throw new EntityExistsException();
         }
     }
 
-
     public ProjectDto addClient(int clientId, int projectId) {
-        if (repository.existsByProjectId(projectId)) {
-            Project project = repository.findById(projectId).get();
-            return (repository.save(checkIfClientNotAssignedProject(project, clientId))
-                    .toDto());
-        } else {
-            throw new EntityExistsException();
-        }
+
+        Optional<Project> project = repository.findById(projectId);
+        checkIfClientNotAssignedProject(project
+                .orElseThrow(() -> new NullPointerException()),clientId);
+        Client client = clientRepository.findById(clientId).get();
+        project.get().setClient(client);
+        return repository.save(project.get()).toDto();
     }
 
-    private Project checkIfClientNotAssignedProject(Project project, int clientId) {
+    private void checkIfClientNotAssignedProject(Project project, int clientId) {
         boolean alreadyExist = false;
         if (project.getClient() != null) {
             alreadyExist = project.getClient().getClientId() == clientId;
         }
         if (alreadyExist) {
             throw new EntityExistsException();
-        } else {
-            Client client = clientRepository.findByClientId(clientId).get();
-            project.setClient(client);
-            return project;
         }
     }
 
-    public ProjectDto removeClient(int clientId, int projectId, boolean deleteClient) {
-        if (repository.existsByProjectId(projectId)
-                && clientRepository.existsById(clientId)) {
+    public ProjectDto removeClient(int projectId) {
+        if (repository.existsByProjectId(projectId)) {
             Project project = repository.findById(projectId).get();
             project.setClient(null);
-            if (deleteClient == true) {
-                clientRepository.deleteById(clientId);
-            }
             return (repository.save(project).toDto());
         } else {
             throw new EntityExistsException();

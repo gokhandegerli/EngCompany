@@ -68,17 +68,17 @@ public class ProjectController {
         } catch (EntityExistsException ex) {
             return new ProjectDto("FAILED, This employee already assigned to project!");
         }
+        catch (NullPointerException nex){
+            return new ProjectDto("FAILED, Project not exist");
+        }
     }
 
-    @PostMapping("{projectId}/remove-employee/{employeeId}/delete-employee/{deleteEmployee}")
-    public ProjectDto removeEmployee(@PathVariable(value = "employeeId") int employeeId,
-                                     @PathVariable(value = "projectId") int projectId,
-                                     @PathVariable(value = "deleteEmployee") boolean deleteEmployee) {
+    @PostMapping("{projectId}/remove-employee")
+    public ProjectDto removeEmployee(@PathVariable(value = "projectId") int projectId) {
         try {
-            return service.removeEmployee(employeeId, projectId, deleteEmployee);
+            return service.removeEmployee(projectId);
         } catch (EntityExistsException ex) {
-            return new ProjectDto("FAILED, Project not exist or " +
-                    "this employee is not asssigned to this project!");
+            return new ProjectDto("FAILED, Project not exist ");
         }
     }
 
@@ -90,17 +90,17 @@ public class ProjectController {
         } catch (EntityExistsException ex) {
             return new ProjectDto("FAILED, This manager already assigned to project!");
         }
+        catch (NullPointerException nex){
+            return new ProjectDto("FAILED, Project not exist");
+        }
     }
 
-    @PostMapping("{projectId}/remove-manager/{employeeId}/delete-manager/{deleteManager}")
-    public ProjectDto removeManager(@PathVariable(value = "employeeId") int employeeId,
-                                    @PathVariable(value = "projectId") int projectId,
-                                    @PathVariable(value = "deleteManager") boolean deleteManager) {
+    @PostMapping("{projectId}/remove-manager")
+    public ProjectDto removeManager(@PathVariable(value = "projectId") int projectId) {
         try {
-            return service.removeManager(employeeId, projectId, deleteManager);
+            return service.removeManager(projectId);
         } catch (EntityExistsException ex) {
-            return new ProjectDto("FAILED, Project not exist or " +
-                    "this manager is not assigned to this project!");
+            return new ProjectDto("FAILED, Project not exist ");
         }
     }
 
@@ -112,17 +112,17 @@ public class ProjectController {
         } catch (EntityExistsException ex) {
             return new ProjectDto("FAILED, This client already assigned to project!");
         }
+        catch (NullPointerException nex){
+            return new ProjectDto("FAILED, Project not exist");
+        }
     }
 
-    @PostMapping("{projectId}/remove-client/{clientId}/delete-client/{deleteClient}")
-    public ProjectDto removeClient(@PathVariable(value = "clientId") int clientId,
-                                   @PathVariable(value = "projectId") int projectId,
-                                   @PathVariable(value = "deleteClient") boolean deleteClient) {
+    @PostMapping("{projectId}/remove-client")
+    public ProjectDto removeClient(@PathVariable(value = "projectId") int projectId) {
         try {
-            return service.removeClient(clientId, projectId, deleteClient);
+            return service.removeClient(projectId);
         } catch (EntityExistsException ex) {
-            return new ProjectDto("FAILED, Project not exist or " +
-                    "this client is not assigned to this project!");
+            return new ProjectDto("FAILED, Project not exist ");
         }
     }
 

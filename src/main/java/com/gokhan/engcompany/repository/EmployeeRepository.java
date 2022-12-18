@@ -13,8 +13,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     boolean existsByEmployeeId (int employeeId);
 
 
-    Optional<Employee> findByEmployeeId(int employeeId);
-
     //@Query("SELECT '*' FROM Employee e WHERE e.department.departmentId = :id") //( Buna gerek kalmadı. )
     List<Employee> findByDepartmentDepartmentId(int id);
 }

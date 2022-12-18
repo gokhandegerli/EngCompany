@@ -26,7 +26,7 @@ public class Department {
     @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = MAP_CAT, cascade = CascadeType.ALL)
     private List<Project> projectList = new ArrayList<>();
 
     @ManyToOne

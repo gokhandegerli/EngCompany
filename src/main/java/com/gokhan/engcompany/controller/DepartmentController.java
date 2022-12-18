@@ -30,7 +30,11 @@ public class DepartmentController {
     @PutMapping("{departmentId}")
     public DepartmentDto updateDepartment(@PathVariable(value = "departmentId") int departmentId,
                                           @RequestBody DepartmentRequest departmentRequest) {
-        return service.updateDepartment(departmentId, departmentRequest);
+        try {
+            return service.updateDepartment(departmentId, departmentRequest);
+        } catch (NullPointerException nex) {
+            return new DepartmentDto("FAILED, This department not exist");
+        }
     }
 
     @GetMapping("{departmentId}")
@@ -58,6 +62,9 @@ public class DepartmentController {
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, This employee already in this department!");
         }
+        catch (NullPointerException nex){
+            return new DepartmentDto("FAILED, Department not exist");
+        }
     }
 
     @PostMapping("{departmentId}/add-project/{projectId}")
@@ -68,38 +75,36 @@ public class DepartmentController {
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, This project already a part of this department!");
         }
+        catch (NullPointerException nex){
+            return new DepartmentDto("FAILED, Department not exist");
+        }
     }
 
-    @PostMapping("{departmentId}/remove-employee/{employeeId}/delete-employee/{deleteEmployee}")
+    @PostMapping("{departmentId}/remove-employee/{employeeId}")
     public DepartmentDto removeEmployee(@PathVariable(value = "employeeId") int employeeId,
-                                        @PathVariable(value = "departmentId") int departmentId,
-                                        @PathVariable(value = "deleteEmployee") boolean deleteEmployee) {
+                                        @PathVariable(value = "departmentId") int departmentId) {
         try {
-            return service.removeEmployee(employeeId, departmentId, deleteEmployee);
+            return service.removeEmployee(employeeId, departmentId);
         } catch (EntityExistsException ex) {
-            return new DepartmentDto("FAILED, Department not exist or " +
-                    "this employee is not a part of this department!");
+            return new DepartmentDto("FAILED, Department not exist");
         }
     }
 
-    @PostMapping("{departmentId}/remove-manager/{managerId}/delete-manager/{deleteManager}")
+    @PostMapping("{departmentId}/remove-manager/{managerId}")
     public DepartmentDto removeManager(@PathVariable(value = "managerId") int managerId,
-                                       @PathVariable(value = "departmentId") int departmentId,
-                                       @PathVariable(value = "deleteManager") boolean deleteManager) {
+                                       @PathVariable(value = "departmentId") int departmentId) {
         try {
-            return service.removeManager(managerId, departmentId, deleteManager);
+            return service.removeManager(managerId, departmentId);
         } catch (EntityExistsException ex) {
-            return new DepartmentDto("FAILED, Department not exist or " +
-                    "this manager is not a part of this department!");
+            return new DepartmentDto("FAILED, Department not exist");
         }
     }
 
-    @PostMapping("{departmentId}/remove-project/{projectId}/delete-project/{deleteProject}")
+    @PostMapping("{departmentId}/remove-project/{projectId}")
     public DepartmentDto removeProject(@PathVariable(value = "projectId") int projectId,
-                                       @PathVariable(value = "departmentId") int departmentId,
-                                       @PathVariable(value = "deleteProject") boolean deleteProject) {
+                                       @PathVariable(value = "departmentId") int departmentId) {
         try {
-            return service.removeProject(projectId, departmentId, deleteProject);
+            return service.removeProject(projectId, departmentId);
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, Department not exist or" +
                     " this project is not a part of this department!");

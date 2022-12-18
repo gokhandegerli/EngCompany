@@ -36,7 +36,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeEntity(int employeeId) {
-        return repository.findByEmployeeId(employeeId).get();
+        return repository.findById(employeeId).get();
     }
 
     public EmployeeDto getEmployeeDto(int employeeId) {
@@ -113,14 +113,6 @@ public class EmployeeService {
             employee.setManager(employeeRequest.isManager);
         }
         return repository.save(employee).toDto();
-    }
-
-    protected boolean checkIfEmployeeExists(int employeeId) {
-        if (repository.existsByEmployeeId(employeeId)) {
-            return true;
-        } else {
-            throw new EntityExistsException();
-        }
     }
 
     public List<EmployeeDto> getProjectFreeEmployees() {

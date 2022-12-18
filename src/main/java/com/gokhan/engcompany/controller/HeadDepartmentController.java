@@ -62,6 +62,9 @@ public class HeadDepartmentController {
         } catch (EntityExistsException ex) {
             return new HeadDepartmentDto("FAILED, This Department is  already in the list!");
         }
+        catch (NullPointerException nex){
+            return new HeadDepartmentDto("FAILED, Head Department not exist");
+        }
     }
 
     @PostMapping("{headDepartmentId}/remove-department/{departmentId}")
