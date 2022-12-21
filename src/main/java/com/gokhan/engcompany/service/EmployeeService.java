@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -27,7 +28,7 @@ public class EmployeeService {
 
         Employee manager = repository.findById(employeeId).get();
 
-        if ((manager.setManager() == true)) {
+        if ((manager.getManager() == true)) {
             return manager;
         } else { // to be added custom throw
             return null;
@@ -35,7 +36,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeEntity(int employeeId) {
-        return repository.findByEmployeeId(employeeId).get();
+        return repository.findById(employeeId).get();
     }
 
     public EmployeeDto getEmployeeDto(int employeeId) {
@@ -47,40 +48,24 @@ public class EmployeeService {
         }
     }
 
-    public EmployeeDto createEmployee(EmployeeRequest employeeRequest) {
+    public EmployeeDto createEmployee(EmployeeRequest employeeRequest, boolean isManager) {
 
-        if (employeeRequest.isManager == false) {
-            return createAndSetEmployee(employeeRequest);
-        } else { //to be added custom throw
-            return new EmployeeDto("FAILED, This Employee should not be set as Manager, reconstruct it!");
-        }
-    }
-
-
-    public EmployeeDto createManager(EmployeeRequest employeeRequest) {
-
-        if (employeeRequest.isManager == true) {
-            return createAndSetEmployee(employeeRequest);
-        } else { //to be added custom throw
-            return new EmployeeDto("FAILED, This Employee should be set as Manager, reconstruct it!");
-        }
-    }
-
-    public EmployeeDto createAndSetEmployee(EmployeeRequest employeeRequest) {
-        //personService.checkByPersonIdentityNumber(employeeRequest.personRequest.identityNumber);
         Employee employee = new Employee();
+        if (isManager) {
+            employee.setManager(true);
+        }
         employee.setPerson(personService.insert(employeeRequest.personRequest));
         employee.setTitle(employeeRequest.title);
-        employee.setManager(employeeRequest.isManager);
         employee = repository.save(employee);
         return employee.toDto();
     }
 
+
     public EmployeeDto promoteEmployee(EmployeeRequest employeeRequest, int employeeId) {
 
         Employee employee = getEmployeeEntity(employeeId);
-        if (!employee.setManager()) {
-            employee.setManager(employeeRequest.isManager);
+        if (!employee.getManager()) {
+            employee.setManager(true);
             employee.setTitle(employeeRequest.title);
             return repository.save(employee).toDto();
         } else {
@@ -104,22 +89,9 @@ public class EmployeeService {
 
     public EmployeeDto updateEmployee(EmployeeRequest employeeRequest, int employeeId) {
         Employee employee = getEmployeeEntity(employeeId);
-        employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
-        if (employee.setManager() != employeeRequest.isManager && employee.setManager() == false) {
-            promoteEmployee(employeeRequest, employeeId);
-        } else {
-            employee.setTitle(employeeRequest.title);
-            employee.setManager(employeeRequest.isManager);
-        }
+        //employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId())); Person'a at PUT)
+        employee.setTitle(employeeRequest.title);
         return repository.save(employee).toDto();
-    }
-
-    protected boolean checkIfEmployeeExists(int employeeId) {
-        if (repository.existsByEmployeeId(employeeId)) {
-            return true;
-        } else {
-            throw new EntityExistsException();
-        }
     }
 
     public List<EmployeeDto> getProjectFreeEmployees() {
@@ -129,6 +101,10 @@ public class EmployeeService {
                 .filter(employee -> !assignedEmployees.contains(employee))
                 .map(Employee::toDto) //forEach ile map farkı, biri void döner, biri ise tip döner.
                 .toList();
+    }
+
+    public List<EmployeeDto> getAllEmployees() {
+        return repository.findAll().stream().map(Employee::toDto).toList();
     }
 
 }

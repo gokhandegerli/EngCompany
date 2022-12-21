@@ -1,0 +1,1049 @@
+{
+	"info": {
+		"_postman_id": "d9743211-25d3-48f0-a232-5ba5ef5c1b6e",
+		"name": "EngCompany",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24095631"
+	},
+	"item": [
+		{
+			"name": "HeadDepartment",
+			"item": [
+				{
+					"name": "createHeadDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentType\":\"ENGINEERING\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/head-departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateHeadDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentType\":\"SALES\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/head-departments/26/update-headDepartment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"26",
+								"update-headDepartment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getHeadDepartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHeadDepartment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add/updateManagerOfHeadDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/27/update-manager/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"27",
+								"update-manager",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addDepartmentToHeadDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/27/add-department/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"27",
+								"add-department",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeDepartmentFromHeadDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/27/remove-department/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"27",
+								"remove-department",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartmentsOfHeadDepartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/head-departments/27/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"head-departments",
+								"27",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "createDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentType\":\"PC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDepartment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addEmployeeToDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/27/add-employee/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"27",
+								"add-employee",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentType\":\"SCADA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/departments/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update/addManagerOfDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23/update-manager/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23",
+								"update-manager",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProjectToDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/departments/27/add-project/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"27",
+								"add-project",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeEmployeeFromDepartment(AndRemoveEmployeeFromDB?)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23/remove-employee/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23",
+								"remove-employee",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeManagerFromDepartment(andRemoveManagerFromDB?)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23/remove-manager/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23",
+								"remove-manager",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeProjectFromDepartment(AndRemoveProjectFromDB?)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23/remove-project/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23",
+								"remove-project",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeesOfDepartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/23/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"23",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProjectsOfDepartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/departments/24/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"departments",
+								"24",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "createEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personRequest\":{\r\n            \"firstName\": \"Berkay\",\r\n            \"lastName\":\"Erten\",\r\n            \"identityNumber\": \"0000000002\",\r\n            \"email\": \"berkay.erten@tesla.com\",\r\n            \"address\":\"Hamburg\",\r\n            \"companyName\":\"tesla\"\r\n        },\r\n    \"title\":\"SENIOR_ENGINEER\",\r\n    \"isManager\": \"False\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/employees/create-employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"create-employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createManager",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personRequest\":{\r\n            \"firstName\": \"Levedsdst\",\r\n            \"lastName\":\"Bilsdsden\",\r\n            \"identityNumber\": \"0000000006\",\r\n            \"email\": \"levent.bilen@tesla.com\",\r\n            \"address\":\"Viyana\",\r\n            \"companyName\":\"tesla\"\r\n        },\r\n    \"title\":\"SCADA_MANAGER\",\r\n    \"isManager\": \"True\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/employees/create-manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"create-manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promoteEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"SCADA_MANAGER\",\r\n    \"isManager\":\"True\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/employees/11/promote-employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"11",
+								"promote-employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personRequest\":{\r\n            \"firstName\": \"UpdatedEmployee1\",\r\n            \"lastName\":\"UpdatedEmployee1SN\",\r\n            \"identityNumber\": \"0000000012\",\r\n            \"email\": \"U.emp@tesla.com\",\r\n            \"address\":\"İstanbul\",\r\n            \"companyName\":\"tesla\"\r\n        },\r\n    \"title\":\"SENIOR_ENGINEER\",\r\n    \"isManager\": \"False\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/employees/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/employees/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProjectFreeEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/employees/get-project-free-employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"get-project-free-employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/employees/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"employees",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "createClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personRequest\":{\r\n            \"firstName\": \"Client1Name\",\r\n            \"lastName\":\"Client1SurName\",\r\n            \"identityNumber\": \"0000000001\",\r\n            \"email\": \"client1@client1.com\",\r\n            \"address\":\"client1Address\",\r\n            \"companyName\":\"Client1Company\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/clients/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"clients",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllClients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/clients/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"clients",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "createProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Project3\",\r\n    \"startDate\":\"2023-03-12\",\r\n    \"projectStatus\":\"ACCEPTED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects"
+							]
+						},
+						"description": "createProject"
+					},
+					"response": []
+				},
+				{
+					"name": "addEmployeeToProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/add-employee/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"add-employee",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Project1Yeni\",\r\n    \"startDate\":\"2023-03-12\",\r\n    \"projectStatus\":\"ACCEPTED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/projects/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProject",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/28",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-projects-start-within-3-months",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/get-projects-start-within-3-months",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"get-projects-start-within-3-months"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeEmployeeFromProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/remove-employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"remove-employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addManagerToProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/add-manager/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"add-manager",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeManager",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/remove-manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"remove-manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addClientToProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/add-client/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"add-client",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeClientFromProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/projects/22/remove-client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"projects",
+								"22",
+								"remove-client"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

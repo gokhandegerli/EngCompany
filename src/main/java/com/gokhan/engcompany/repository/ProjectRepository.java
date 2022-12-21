@@ -17,7 +17,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Query("SELECT p from Project p WHERE p.employee IN :employees") //Listeyse IN kullan. @Query verince
     //alttaki lojik(derived query=findProjectFreeEmployees), devre dışı kalır, jpql olarak
         // bizim yazmamızı bekler. jpql de "SELECT ..." olan sql kodu. jpql kodtaki p de Project'in bir instance
-        // gibi davranıyor.
+        // gibi davranıyor. Alttaki ise "In query" method olarak adlandırılır.
     List<Project> findProjectsWithEmployees(List<Employee> employees);
 
+    List<Project> findByDepartmentDepartmentId(int departmentId);
 }

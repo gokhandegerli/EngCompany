@@ -31,6 +31,7 @@ public class Project {
     private Employee manager;
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @Column(nullable = false)
@@ -155,7 +156,7 @@ public class Project {
         dto.employeeDto = this.getEmployeeDto();
         dto.managerDto = this.getManagerDto();
         dto.clientDto = this.getClientDto();
-        dto.departmentDto = this.getDepartmentDto();
+        //dto.departmentDto = this.getDepartmentDto();
         dto.projectStatus = this.projectStatus;
         dto.startDate = this.startDate;
         return dto;

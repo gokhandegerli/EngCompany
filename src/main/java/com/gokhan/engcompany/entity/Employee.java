@@ -21,6 +21,7 @@ public class Employee {
 
     // with below field we have assigned an employee to a team
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
     private boolean isManager;
 
@@ -77,12 +78,12 @@ public class Employee {
         this.department = department;
     }
 
-    public boolean setManager() {
+    public boolean getManager() {
         return isManager;
     }
 
-    public void setManager(boolean manager) {
-        isManager = manager;
+    public void setManager(boolean isManager) {
+        this.isManager = isManager;
     }
 
     public EmployeeDto toDto() {
@@ -93,6 +94,4 @@ public class Employee {
         dto.isManager = this.isManager;
         return dto;
     }
-
-
 }

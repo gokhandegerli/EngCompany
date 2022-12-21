@@ -8,7 +8,5 @@ public class EmployeeRequest {
 
     public Title title;
 
-    public boolean isManager;
-
     
 }

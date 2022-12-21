@@ -18,12 +18,12 @@ public class EmployeeController {
 
     @PostMapping("create-employee")
     public EmployeeDto createEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        return service.createEmployee(employeeRequest);
+        return service.createEmployee(employeeRequest, false);
     }
 
     @PostMapping("create-manager")
     public EmployeeDto createManager(@RequestBody EmployeeRequest employeeRequest) {
-        return service.createManager(employeeRequest);
+        return service.createEmployee(employeeRequest, true);
     }
 
     @PostMapping("{employeeId}/promote-employee")
@@ -32,7 +32,7 @@ public class EmployeeController {
         return service.promoteEmployee(employeeRequest, employeeId);
     }
 
-    @PutMapping("{employeeId}/update-employee")
+    @PutMapping("{employeeId}")
     public EmployeeDto updateEmployee(@RequestBody EmployeeRequest employeeRequest,
                                       @PathVariable (value="employeeId") int employeeId) {
         return service.updateEmployee(employeeRequest, employeeId);
@@ -43,7 +43,7 @@ public class EmployeeController {
         return service.getEmployeeDto(employeeId);
     }
 
-    @DeleteMapping("{employeeId}/delete-employee")
+    @DeleteMapping("{employeeId}")
     public String deleteEmployee(@PathVariable (value="employeeId") int employeeId) {
         return service.deleteEmployee(employeeId);
     }
@@ -51,6 +51,11 @@ public class EmployeeController {
     @GetMapping("get-project-free-employees")
     public List<EmployeeDto> getProjectFreeEmployees() {
         return service.getProjectFreeEmployees();
+    }
+
+    @GetMapping()
+    public List<EmployeeDto> getAllEmployees() {
+        return service.getAllEmployees();
     }
 
 }

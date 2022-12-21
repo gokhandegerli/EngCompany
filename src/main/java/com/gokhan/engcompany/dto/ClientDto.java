@@ -6,6 +6,13 @@ public class ClientDto {
 
     public int clientId;
     public PersonDto personDto;
-    public String message;
+    public String message = "Success";
+
+    public ClientDto (String message) {
+        this.message = message;
+    }
+
+    public ClientDto () {
+    }
 
 }

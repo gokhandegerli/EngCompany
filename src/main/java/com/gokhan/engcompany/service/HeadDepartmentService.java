@@ -1,5 +1,6 @@
 package com.gokhan.engcompany.service;
 
+import com.gokhan.engcompany.dto.DepartmentDto;
 import com.gokhan.engcompany.dto.HeadDepartmentDto;
 import com.gokhan.engcompany.entity.Department;
 import com.gokhan.engcompany.entity.Employee;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HeadDepartmentService {
@@ -48,28 +51,24 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto addDepartment(int departmentId, int headDepartmentId) {
 
-        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
-            HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-            return (repository.save(checkIfDepartmentNotAPartOfADepartmentList(headDepartment, departmentId))
-                    .toDto());
-        } else {
-            throw new EntityExistsException();
-        }
-
+        Optional<HeadDepartment> headDepartment = repository.findById(headDepartmentId);
+        checkIfDepartmentNotAPartOfADepartmentList(headDepartment
+                .orElseThrow(() -> new NullPointerException()),departmentId);
+        Department department = departmentService.getDepartmentEntity(departmentId);
+        department.setHeadDepartment(headDepartment.get());
+        headDepartment.get().getDepartmentList().add(department);
+        return repository.save(headDepartment.get()).toDto();
     }
 
-    public HeadDepartment checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
+    public void checkIfDepartmentNotAPartOfADepartmentList(HeadDepartment headDepartment,
                                                                      int departmentId) {
-
-        boolean alreadyExist = headDepartment.getDepartmentList().stream().anyMatch(department1 -> Integer.valueOf(
-                department1.getDepartmentId()).equals(Integer.valueOf(departmentId)));
+        boolean alreadyExist=false;
+        if (headDepartment.getDepartmentList() !=null) {
+            alreadyExist = headDepartment.getDepartmentList().stream().anyMatch(department1 -> department1.
+                    getDepartmentId() == departmentId);
+        }
         if (alreadyExist) {
             throw new EntityExistsException();
-        } else {
-            Department department = departmentService.getDepartmentEntity(departmentId);
-            department.setHeadDepartment(headDepartment);
-            headDepartment.getDepartmentList().add(department);
-            return headDepartment;
         }
     }
 
@@ -108,13 +107,33 @@ public class HeadDepartmentService {
 
     public HeadDepartmentDto removeDepartment(int departmentId, int headDepartmentId) {
 
-        if (repository.existsByHeadDepartmentId(headDepartmentId)
-                && departmentService.checkIfDepartmentExists(departmentId)) {
+        if (repository.existsByHeadDepartmentId(headDepartmentId)) {
             HeadDepartment headDepartment = repository.findById(headDepartmentId).get();
-            headDepartment.getDepartmentList().remove(departmentId);
-            return (headDepartment.toDto());
+            Department department = departmentService.getDepartmentEntity(departmentId);
+            department.setHeadDepartment(null);
+            headDepartment.getDepartmentList().remove(department);
+            return (repository.save(headDepartment).toDto());
         } else {
             throw new EntityExistsException();
         }
+    }
+
+    public HeadDepartmentDto updateHeadDepartment(HeadDepartmentRequest headDepartmentRequest,
+                                                  int headDepartmentId) {
+        Optional<HeadDepartment> headDepartment = repository.findById(headDepartmentId);
+        if (headDepartment.isPresent()) {
+            headDepartment.get().setDepartmentType(headDepartmentRequest.departmentType);
+            return repository.save(headDepartment.get()).toDto();
+        }
+        return null;
+    }
+
+
+    public List<DepartmentDto> getDepartmentsOfHeadDepartment(int headDepartmentId) {
+
+        return repository.findById(headDepartmentId).get()
+                .getDepartmentList().stream()
+                .map(Department::toDto)
+                .toList();
     }
 }
