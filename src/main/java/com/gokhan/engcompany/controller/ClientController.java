@@ -23,11 +23,6 @@ public class ClientController {
         return service.createClient(clientRequest);
     }
 
-    @PutMapping("{clientId}")
-    public ClientDto updateClient(@RequestBody ClientRequest clientRequest,
-                                  @PathVariable(value = "clientId") int clientId) {
-        return service.updateClient(clientRequest, clientId);
-    }
 
     @GetMapping ("{clientId}")
     public ClientDto getClient(@PathVariable (value="clientId") int clientId) {

@@ -714,35 +714,6 @@
 					"response": []
 				},
 				{
-					"name": "updateClient",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"personRequest\":{\r\n            \"firstName\": \"Client1NameNew\",\r\n            \"lastName\":\"Client1SurNameNew\",\r\n            \"identityNumber\": \"0000000001\",\r\n            \"email\": \"client1@client1.com\",\r\n            \"address\":\"client1AddressNew\",\r\n            \"companyName\":\"Client1CompanyNew\"\r\n        }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:9090/clients/7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9090",
-							"path": [
-								"clients",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "getClient",
 					"request": {
 						"method": "GET",

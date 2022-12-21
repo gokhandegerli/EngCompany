@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +72,7 @@ public class DepartmentService {
 
         Optional<Department> department = repository.findById(departmentId);
         checkIfEmployeeNotAPartOfAEmployeeList(department
-                .orElseThrow(() -> new NullPointerException()),employeeId);
+                .orElseThrow(() -> new EntityNotFoundException("FAILED, Department not exist")),employeeId);
         Employee employee = employeeService.getEmployeeEntity(employeeId);
         department.get().getEmployeeList().add(employee);
         employee.setDepartment(department.get());
@@ -95,7 +96,7 @@ public class DepartmentService {
 
         Optional<Department> department = repository.findById(departmentId);
         checkIfProjectNotAPartOfAProjectList(department
-                .orElseThrow(() -> new NullPointerException()),projectId);
+                .orElseThrow(() -> new EntityNotFoundException("FAILED, Department not exist")),projectId);
         Project project = projectService.getProjectEntity(projectId);
         department.get().getProjectList().add(project);
         project.setDepartment(department.get());
@@ -125,7 +126,17 @@ public class DepartmentService {
     }
 
     public DepartmentDto removeEmployee(int employeeId, int departmentId) {
-        if (repository.existsByDepartmentId(departmentId)) {
+
+        return repository.findById(departmentId)
+                .map(department1 -> {employeeService.getEmployeeEntity(employeeId).setDepartment(null);
+                    department1.getEmployeeList().removeIf(employee ->
+                            employee.getEmployeeId()==employeeId);
+                    return (department1);
+                })
+                .map(repository::save)
+                .map(Department::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found!"));
+        /*if (repository.existsByDepartmentId(departmentId)) {
             Department department = repository.findById(departmentId).get();
             employeeService.getEmployeeEntity(employeeId).setDepartment(null);
             department.getEmployeeList().removeIf(employee ->
@@ -133,40 +144,52 @@ public class DepartmentService {
             return (repository.save(department).toDto());
         } else {
             throw new EntityExistsException();
-        }
+        }*/
     }
 
     public DepartmentDto removeManager(int managerId, int departmentId) {
-        if (repository.existsByDepartmentId(departmentId)) {
-            Department department = repository.findById(departmentId).get();
-            department.getManager().setDepartment(null);
-            department.setManager(null);
-            department.getEmployeeList().removeIf(employee ->
-                    employee.getEmployeeId()==managerId);
-            return (repository.save(department).toDto());
-        } else {
-            throw new EntityExistsException();
-        }
+
+        return repository.findById(departmentId)
+                .map(department1 -> {department1.getManager().setDepartment(null);
+                    department1.getEmployeeList().removeIf(employee ->
+                        employee.getEmployeeId()==managerId);
+                    department1.setManager(null);
+                    return (department1);
+                })
+                .map(repository::save)
+                .map(Department::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found!"));
+
     }
 
     public DepartmentDto removeProject(int projectId, int departmentId) {
-        if (repository.existsByDepartmentId(departmentId)) {
-            Department department = repository.findById(departmentId).get();
-            projectService.getProjectEntity(projectId).setDepartment(null);
-            department.getProjectList().removeIf(project ->
-                    project.getProjectId()==projectId);
-            return (repository.save(department).toDto());
-        } else {
-            throw new EntityExistsException();
-        }
+
+        return repository.findById(departmentId)
+                .map(department1 -> {department1.getProjectList().
+                        removeIf(project -> project.getProjectId()==projectId);
+                    projectService.getProjectEntity(projectId).setDepartment(null);
+                    return (department1);
+                })
+                .map(repository::save)
+                .map(Department::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found!"));
+
     }
 
     public DepartmentDto updateDepartment(int departmentId, DepartmentRequest departmentRequest) {
 
-        return repository.save(repository.findById(departmentId).map(department1 -> {
+/*        return repository.save(repository.findById(departmentId).map(department1 -> {
             department1.setDepartmentType(departmentRequest.departmentType);
             return (department1);
-        } ).orElseThrow(() -> new NullPointerException())).toDto();
+        } ).orElseThrow(() -> new NullPointerException())).toDto();*/
+
+        return repository.findById(departmentId)
+                .map(department1 -> {department1.setDepartmentType(departmentRequest.departmentType);
+                    return (department1);
+                })
+                .map(repository::save)
+                .map(Department::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("department not found!"));
     }
 
     public List<EmployeeDto> getADepartmentEmployees(int departmentId) {

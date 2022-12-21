@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class DepartmentController {
                                           @RequestBody DepartmentRequest departmentRequest) {
         try {
             return service.updateDepartment(departmentId, departmentRequest);
-        } catch (NullPointerException nex) {
+        } catch (EntityNotFoundException ex) {
             return new DepartmentDto("FAILED, This department not exist");
         }
     }
@@ -62,7 +63,7 @@ public class DepartmentController {
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, This employee already in this department!");
         }
-        catch (NullPointerException nex){
+        catch (EntityNotFoundException nex){
             return new DepartmentDto("FAILED, Department not exist");
         }
     }
@@ -75,7 +76,7 @@ public class DepartmentController {
         } catch (EntityExistsException ex) {
             return new DepartmentDto("FAILED, This project already a part of this department!");
         }
-        catch (NullPointerException nex){
+        catch (EntityNotFoundException nex){
             return new DepartmentDto("FAILED, Department not exist");
         }
     }
@@ -85,7 +86,7 @@ public class DepartmentController {
                                         @PathVariable(value = "departmentId") int departmentId) {
         try {
             return service.removeEmployee(employeeId, departmentId);
-        } catch (EntityExistsException ex) {
+        } catch (EntityNotFoundException ex) {
             return new DepartmentDto("FAILED, Department not exist");
         }
     }
@@ -95,7 +96,7 @@ public class DepartmentController {
                                        @PathVariable(value = "departmentId") int departmentId) {
         try {
             return service.removeManager(managerId, departmentId);
-        } catch (EntityExistsException ex) {
+        } catch (EntityNotFoundException ex) {
             return new DepartmentDto("FAILED, Department not exist");
         }
     }
@@ -105,7 +106,7 @@ public class DepartmentController {
                                        @PathVariable(value = "departmentId") int departmentId) {
         try {
             return service.removeProject(projectId, departmentId);
-        } catch (EntityExistsException ex) {
+        } catch (EntityNotFoundException ex) {
             return new DepartmentDto("FAILED, Department not exist or" +
                     " this project is not a part of this department!");
         }

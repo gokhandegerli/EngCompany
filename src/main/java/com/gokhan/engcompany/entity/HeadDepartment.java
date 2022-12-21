@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class HeadDepartment {
 
-    private final static String MAP_CAT="headDepartment";
+    private static final String MAP_CAT="headDepartment";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -18,12 +18,12 @@ public class EmployeeController {
 
     @PostMapping("create-employee")
     public EmployeeDto createEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        return service.createEmployee(employeeRequest);
+        return service.createEmployee(employeeRequest, false);
     }
 
     @PostMapping("create-manager")
     public EmployeeDto createManager(@RequestBody EmployeeRequest employeeRequest) {
-        return service.createManager(employeeRequest);
+        return service.createEmployee(employeeRequest, true);
     }
 
     @PostMapping("{employeeId}/promote-employee")

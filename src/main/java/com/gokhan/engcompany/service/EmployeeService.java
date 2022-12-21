@@ -48,40 +48,24 @@ public class EmployeeService {
         }
     }
 
-    public EmployeeDto createEmployee(EmployeeRequest employeeRequest) {
+    public EmployeeDto createEmployee(EmployeeRequest employeeRequest, boolean isManager) {
 
-        if (employeeRequest.isManager == false) {
-            return createAndSetEmployee(employeeRequest);
-        } else { //to be added custom throw
-            return new EmployeeDto("FAILED, This Employee should not be set as Manager, reconstruct it!");
-        }
-    }
-
-
-    public EmployeeDto createManager(EmployeeRequest employeeRequest) {
-
-        if (employeeRequest.isManager == true) {
-            return createAndSetEmployee(employeeRequest);
-        } else { //to be added custom throw
-            return new EmployeeDto("FAILED, This Employee should be set as Manager, reconstruct it!");
-        }
-    }
-
-    public EmployeeDto createAndSetEmployee(EmployeeRequest employeeRequest) {
-        //personService.checkByPersonIdentityNumber(employeeRequest.personRequest.identityNumber);
         Employee employee = new Employee();
+        if (isManager) {
+            employee.setManager(true);
+        }
         employee.setPerson(personService.insert(employeeRequest.personRequest));
         employee.setTitle(employeeRequest.title);
-        employee.setManager(employeeRequest.isManager);
         employee = repository.save(employee);
         return employee.toDto();
     }
+
 
     public EmployeeDto promoteEmployee(EmployeeRequest employeeRequest, int employeeId) {
 
         Employee employee = getEmployeeEntity(employeeId);
         if (!employee.getManager()) {
-            employee.setManager(employeeRequest.isManager);
+            employee.setManager(true);
             employee.setTitle(employeeRequest.title);
             return repository.save(employee).toDto();
         } else {
@@ -105,13 +89,8 @@ public class EmployeeService {
 
     public EmployeeDto updateEmployee(EmployeeRequest employeeRequest, int employeeId) {
         Employee employee = getEmployeeEntity(employeeId);
-        employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId()));
-        if (employee.getManager() != employeeRequest.isManager && employee.getManager() == false) {
-            promoteEmployee(employeeRequest, employeeId);
-        } else {
-            employee.setTitle(employeeRequest.title);
-            employee.setManager(employeeRequest.isManager);
-        }
+        //employee.setPerson(personService.update(employeeRequest.personRequest, employee.getPerson().getPersonId())); Person'a at PUT)
+        employee.setTitle(employeeRequest.title);
         return repository.save(employee).toDto();
     }
 

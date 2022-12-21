@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Department {
 
-    private final static String MAP_CAT = "department";
+    private static final String MAP_CAT = "department";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

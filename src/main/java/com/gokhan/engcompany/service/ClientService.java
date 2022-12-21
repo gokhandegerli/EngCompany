@@ -1,9 +1,7 @@
 package com.gokhan.engcompany.service;
 
 import com.gokhan.engcompany.dto.ClientDto;
-import com.gokhan.engcompany.dto.EmployeeDto;
 import com.gokhan.engcompany.entity.Client;
-import com.gokhan.engcompany.entity.Employee;
 import com.gokhan.engcompany.repository.ClientRepository;
 import com.gokhan.engcompany.request.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +39,6 @@ public class ClientService {
 
         Client client = new Client();
         client.setPerson(personService.insert(clientRequest.personRequest));
-        return repository.save(client).toDto();
-    }
-
-
-    public ClientDto updateClient(ClientRequest clientRequest, int clientId) {
-        Client client = getClientEntity(clientId);
-        client.setPerson(personService.update(clientRequest.personRequest, client.getPerson().getPersonId()));
         return repository.save(client).toDto();
     }
 

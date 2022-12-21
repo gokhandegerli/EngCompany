@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository extends JpaRepository<Person,Integer> {
 
-    Optional<Boolean> existsByIdentityNumber (String identityNumber);
+    boolean existsByIdentityNumber (String identityNumber);
 
     Optional<Person> findByIdentityNumber (String identityNumber);
 

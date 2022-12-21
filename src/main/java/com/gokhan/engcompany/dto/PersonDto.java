@@ -10,6 +10,13 @@ public class PersonDto {
     public String addressDto;
     public String companyNameDto;
 
+    public String message = "Success";
 
+    public PersonDto (String message) {
+        this.message = message;
+    }
+
+    public PersonDto () {
+    }
 
 }
